@@ -8,18 +8,14 @@ import {
   Tooltip,
   Typography,
 } from "@mui/material";
-import { NavLink } from "react-router-dom";
-
-const settingItems = [
-  { text: "Account", href: "/account" },
-  { text: "Settings", href: "/settings" },
-  { text: "Logout", href: "/logout" },
-];
+import { NavLink, useNavigate } from "react-router-dom";
+import { useDispatch } from "react-redux";
+import { logOut } from "../../store/authSlice";
+import { Logout } from "@mui/icons-material";
 
 const AvatarMenu = () => {
-  const activeNavStyle =
-    "h-full w-full font-extrabold text-indigo-700 no-underline";
-  const normalNavStyle = "h-full w-full no-underline";
+  const dispatch = useDispatch();
+  const nav = useNavigate();
 
   const [anchorElUser, setAnchorElUser] = useState(null);
 
@@ -30,6 +26,16 @@ const AvatarMenu = () => {
   const handleCloseUserMenu = () => {
     setAnchorElUser(null);
   };
+
+  const logoutClickHandler = () => {
+    dispatch(logOut());
+    nav("/");
+  };
+
+  const settingItems = [
+    { text: "Account", href: "/account" },
+    { text: "Settings", href: "/settings" },
+  ];
 
   return (
     <Box sx={{ flexGrow: 0 }}>
@@ -55,17 +61,18 @@ const AvatarMenu = () => {
         onClose={handleCloseUserMenu}
       >
         {settingItems.map((item) => (
-          <MenuItem key={item.text} onClick={handleCloseUserMenu}>
-            <NavLink
-              to={item.href}
-              className={({ isActive }) =>
-                isActive ? activeNavStyle : normalNavStyle
-              }
-            >
+          <NavLink key={item.text} to={item.href} onClick={item.clickHandler}>
+            <MenuItem key={item.text} onClick={handleCloseUserMenu}>
               <Typography textAlign="center">{item.text}</Typography>
-            </NavLink>
-          </MenuItem>
+            </MenuItem>
+          </NavLink>
         ))}
+        <Box onClick={logoutClickHandler}>
+          <MenuItem onClick={handleCloseUserMenu}>
+            <Logout sx={{ marginRight: "3px" }} />
+            <Typography textAlign="center">Logout</Typography>
+          </MenuItem>
+        </Box>
       </Menu>
     </Box>
   );
