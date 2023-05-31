@@ -91,7 +91,7 @@ const AboutPage = () => {
             <img
               src={AboutImage}
               alt="About Image"
-              className="mt-8 max-w-xl rounded-full"
+              className="mt-8 min-w-0 max-w-sm rounded-full"
             />
           </motion.div>
         </Box>
