@@ -16,6 +16,9 @@ import {
 import MenuIcon from "@mui/icons-material/Menu";
 import ListItemLink from "../components/UI/ListItemLink";
 import AvatarMenu from "../components/UI/AvatarMenu";
+import { useSelector } from "react-redux";
+
+import LoginButton from "./UI/LoginButton";
 
 const navItems = [
   { text: "Home", href: "/" },
@@ -28,6 +31,8 @@ const appName = import.meta.env.VITE_APP_NAME;
 const DrawerAppBar = (props) => {
   const { window } = props;
   const [mobileOpen, setMobileOpen] = useState(false);
+
+  const isLoggedIn = useSelector((state) => state.authenticator.isLoggedIn);
 
   const handleDrawerToggle = () => {
     setMobileOpen((prevState) => !prevState);
@@ -99,7 +104,7 @@ const DrawerAppBar = (props) => {
               </NavLink>
             ))}
           </Box>
-          <AvatarMenu />
+          {isLoggedIn ? <AvatarMenu /> : <LoginButton />}
         </Toolbar>
       </AppBar>
       <Box component="nav">
