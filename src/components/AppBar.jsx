@@ -58,7 +58,7 @@ const DrawerAppBar = (props) => {
   return (
     <Box sx={{ display: "flex" }}>
       <CssBaseline />
-      <AppBar>
+      <AppBar className="fixed top-0 z-50">
         <Toolbar>
           <Typography
             variant="h6"
