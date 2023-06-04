@@ -1,5 +1,4 @@
 import { createSlice } from "@reduxjs/toolkit";
-import usersJson from "../data/users.json";
 
 const authSlice = createSlice({
   name: "auth",
@@ -11,12 +10,7 @@ const authSlice = createSlice({
   },
   reducers: {
     logIn: (state, action) => {
-      const users = usersJson;
-
-      const { email, password } = action.payload;
-      const user = users.find((user) => {
-        return user.email === email && user.password === password;
-      });
+      const { user } = action.payload;
 
       if (user) {
         state.isLoggedIn = true;

@@ -10,9 +10,11 @@ import Box from "@mui/material/Box";
 import LockOutlinedIcon from "@mui/icons-material/LockOutlined";
 import Typography from "@mui/material/Typography";
 import Container from "@mui/material/Container";
-import { useDispatch } from "react-redux";
+import { useDispatch} from "react-redux";
 import { logIn } from "../store/authSlice";
 import { useNavigate } from "react-router-dom";
+import { useState } from "react";
+import usersJson from "../data/users.json";
 
 function Copyright(props) {
   const mySiteUrl = import.meta.env.VITE_MY_WEBSITE_URL;
@@ -33,7 +35,16 @@ function Copyright(props) {
   );
 }
 
+function credentialCheck(email, password) {
+  const user = usersJson.find(
+    (user) => user.email === email && user.password === password
+  );
+  return user;
+}
+
 export default function LogIn() {
+  const [loginError, setLoginError] = useState(false);
+
   const dispatch = useDispatch();
   const nav = useNavigate();
 
@@ -42,9 +53,14 @@ export default function LogIn() {
     const data = new FormData(event.currentTarget);
     const email = data.get("email");
     const password = data.get("password");
+    const user = credentialCheck(email, password);
 
-    dispatch(logIn({ email: email, password: password }));
-    nav("/");
+    if (user) {
+      dispatch(logIn({ user, email: email, password: password }));
+      nav("/");
+    } else {
+      setLoginError(true);
+    }
   };
 
   return (
@@ -66,6 +82,8 @@ export default function LogIn() {
         </Typography>
         <Box component="form" onSubmit={handleSubmit} noValidate sx={{ mt: 1 }}>
           <TextField
+            error={loginError}
+            helperText={loginError ? "Username or password is incorrect" : ""}
             margin="normal"
             required
             fullWidth

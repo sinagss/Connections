@@ -3,11 +3,12 @@ import { useSelector } from "react-redux";
 import { useNavigate } from "react-router-dom";
 
 const LoginButton = () => {
-  const auth = useSelector((state) => state.authenticator.isLoggedIn);
+  const isLoggedIn = useSelector((state) => state.authenticator.isLoggedIn);
   const nav = useNavigate();
 
   const clickHandler = () => {
-    if (auth) {
+    console.log(`islogged in: ${isLoggedIn}`);
+    if (isLoggedIn === true) {
       nav("/");
     } else {
       nav("login");
