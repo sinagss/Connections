@@ -1,0 +1,44 @@
+export const users = [
+  {
+    id: 1,
+    name: "John Doe",
+    username: "johndoe",
+    password: "johndoe123",
+    email: "johndoe@example.com",
+    type: "admin",
+  },
+  {
+    id: 2,
+    name: "Jane Smith",
+    username: "janesmith",
+    password: "janesmith123",
+    email: "janesmith@example.com",
+    type: "user",
+  },
+  {
+    id: 3,
+    name: "Alice Johnson",
+    username: "alicejohnson",
+    password: "alicejohnson123",
+    email: "alicejohnson@example.com",
+    type: "admin",
+  },
+  {
+    id: 4,
+    name: "Bob Anderson",
+    username: "bobanderson",
+    password: "bobanderson123",
+    email: "bobanderson@example.com",
+    type: "user",
+  },
+  {
+    id: 5,
+    name: "admin",
+    username: "admin",
+    password: "admin",
+    email: "admin",
+    type: "admin",
+  },
+];
+
+export default users;
