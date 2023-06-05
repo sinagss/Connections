@@ -10,11 +10,11 @@ import Box from "@mui/material/Box";
 import LockOutlinedIcon from "@mui/icons-material/LockOutlined";
 import Typography from "@mui/material/Typography";
 import Container from "@mui/material/Container";
-import { useDispatch} from "react-redux";
+import { useDispatch } from "react-redux";
 import { logIn } from "../store/authSlice";
 import { useNavigate } from "react-router-dom";
 import { useState } from "react";
-import usersJson from "../data/users.json";
+import users from "../constants/users";
 
 function Copyright(props) {
   const mySiteUrl = import.meta.env.VITE_MY_WEBSITE_URL;
@@ -36,7 +36,7 @@ function Copyright(props) {
 }
 
 function credentialCheck(email, password) {
-  const user = usersJson.find(
+  const user = users.find(
     (user) => user.email === email && user.password === password
   );
   return user;
