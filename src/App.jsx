@@ -7,6 +7,7 @@ import AppBar from "./components/AppBar";
 import AboutPage from "./pages/About";
 import { Provider } from "react-redux";
 import store from "./store/store";
+import Connections from "./pages/Connections";
 
 function App() {
   const router = createBrowserRouter([
@@ -28,6 +29,11 @@ function App() {
         {
           path: "login",
           element: <LogIn />,
+          errorElement: <Error />,
+        },
+        {
+          path: "connections",
+          element: <Connections />,
           errorElement: <Error />,
         },
         {
