@@ -7,7 +7,7 @@ const GetStartedButton = () => {
   const nav = useNavigate();
 
   const getStartedClickHandler = () => {
-    auth.isLoggedIn ? nav("/contacts") : nav("/login");
+    auth.isLoggedIn ? nav("/connections") : nav("/login");
   };
 
   return (

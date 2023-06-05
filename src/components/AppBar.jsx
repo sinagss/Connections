@@ -22,6 +22,7 @@ import LoginButton from "./UI/LoginButton";
 
 const navItems = [
   { text: "Home", href: "/" },
+  { text: "Connections", href: "connections" },
   { text: "About", href: "about" },
 ];
 
