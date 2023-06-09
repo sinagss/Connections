@@ -74,9 +74,9 @@ const ModalPage = ({ open, onClose }) => {
 
   useEffect(() => {
     const isValid =
-      firstName && lastName && age && sex && emails && phoneNumbers;
+      firstName && lastName && age && sex && emails.every(isValidEmail);
     setIsValidForm(isValid);
-  }, [firstName, lastName, age, sex, emails, phoneNumbers]);
+  }, [firstName, lastName, age, sex, emails]);
 
   return (
     <Modal open={open} onClose={onClose}>
