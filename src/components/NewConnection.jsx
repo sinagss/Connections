@@ -17,11 +17,11 @@ import {
 } from "@mui/material";
 import genders from "../constants/genders";
 import { IMaskInput } from "react-imask";
-import { Add, AddBox, Delete } from "@mui/icons-material";
+import { AddBox, Delete } from "@mui/icons-material";
+import DynamicPhoneFields from "./DynamicPhoneFields";
 
 const TextMaskCustom = forwardRef(function TextMaskCustom(props, ref) {
   const { onChange, ...other } = props;
-  // const oldMask = "(#00) (000)-0000000";
   const masks = [
     { mask: "+{98}(00) 00-000000" },
     { mask: "+{98}(#90) 0000000" },
@@ -36,7 +36,6 @@ const TextMaskCustom = forwardRef(function TextMaskCustom(props, ref) {
       }}
       inputRef={ref}
       onAccept={(value) => onChange({ target: { name: props.name, value } })}
-      overwrite={"shift"}
       displayChar="+"
     />
   );
@@ -61,7 +60,7 @@ const NewConnection = ({ open, onClose, onAddContact }) => {
     email: "",
   });
 
-  const handleChange = (event) => {
+  const phoneChangeHandler = (event) => {
     setValues({
       ...values,
       [event.target.name]: event.target.value,
@@ -87,23 +86,21 @@ const NewConnection = ({ open, onClose, onAddContact }) => {
     setSex(event.target.value);
   };
 
-  const dynamicPhoneNumberFields = () => {
-    return phoneNumbersArray.map((phoneNumber, index) => {
-      <Grid container spacing={1} alignItems="flex-end">
-        <FormControl variant="standard">
-          <InputLabel htmlFor="formatted-text-mask-input">
-            Phone Number
-          </InputLabel>
-          <Input
-            value={values.textmask}
-            name="textmask"
-            onChange={handleChange}
-            id="formatted-text-mask-input"
-            inputComponent={TextMaskCustom}
-          />
-        </FormControl>
-      </Grid>;
-    });
+  const addPhoneNumber = () => {
+    setPhoneNumbersArray([...phoneNumbersArray, ""]);
+  };
+
+  const dynamicPhoneNumberChangeHandler = (index, event) => {
+    const updatedNumbers = phoneNumbersArray.map((number, i) =>
+      i === index ? event.target.value : number
+    );
+    setPhoneNumbersArray(updatedNumbers);
+  };
+
+  const deletePhoneNumberHandler = (phoneNumber) => {
+    setPhoneNumbersArray(
+      phoneNumbersArray.filter((item) => item !== phoneNumber)
+    );
   };
 
   return (
@@ -167,7 +164,7 @@ const NewConnection = ({ open, onClose, onAddContact }) => {
               <Input
                 value={values.textmask}
                 name="textmask"
-                onChange={handleChange}
+                onChange={phoneChangeHandler}
                 id="formatted-text-mask-input"
                 inputComponent={TextMaskCustom}
               />
@@ -181,11 +178,17 @@ const NewConnection = ({ open, onClose, onAddContact }) => {
             </Container>
           </Grid>
           <Grid item>
-            <IconButton aria-label="add phone number">
+            <IconButton aria-label="add phone number" onClick={addPhoneNumber}>
               <AddBox className="text-theme-blue" />
             </IconButton>
           </Grid>
         </Grid>
+
+        <DynamicPhoneFields
+          phoneNumbersArray={phoneNumbersArray}
+          onChange={dynamicPhoneNumberChangeHandler}
+          onDelete={deletePhoneNumberHandler}
+        />
 
         <TextField
           name="phoneNumber"
