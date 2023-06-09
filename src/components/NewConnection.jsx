@@ -1,4 +1,4 @@
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import PropTypes from "prop-types";
 import {
   Modal,
@@ -10,58 +10,73 @@ import {
   MenuItem,
   FormControl,
   InputLabel,
+  Grid,
   IconButton,
 } from "@mui/material";
-import genders from "../constants/genders";
-import { AddBox } from "@mui/icons-material";
-import DynamicPhoneFields from "./DynamicPhoneFields";
-import CustomPhoneNumber from "./UI/CustomPhoneNumber";
+import { AddBox, Delete } from "@mui/icons-material";
+import { isValidEmail, isValidPhoneNumber } from "../utils/validationUtils";
 
-const NewConnection = ({ open, onClose, onAddContact }) => {
+const ModalPage = ({ open, onClose }) => {
+  const [isValidForm, setIsValidForm] = useState(false);
+  const [firstName, setFirstName] = useState("");
+  const [lastName, setLastName] = useState("");
+  const [age, setAge] = useState("");
   const [sex, setSex] = useState("");
-  const [phoneNumbersArray, setPhoneNumbersArray] = useState([]);
-  const [newContact, setNewContact] = useState({
-    firstName: "",
-    lastName: "",
-    phoneNumber: "",
-    email: "",
-  });
+  const [phoneNumbers, setPhoneNumbers] = useState([""]);
+  const [emails, setEmails] = useState([""]);
+  const [address, setAddress] = useState("");
 
-  const handleInputChange = (e) => {
-    const { name, value } = e.target;
-    setNewContact((prevContact) => ({ ...prevContact, [name]: value }));
+  const handleAddPhoneNumber = () => {
+    setPhoneNumbers([...phoneNumbers, ""]);
   };
 
-  const handleAddContact = () => {
-    onAddContact(newContact);
-    setNewContact({
-      firstName: "",
-      lastName: "",
-      phoneNumber: "",
-      email: "",
-    });
+  const handleDeletePhoneNumber = (index) => {
+    const updatedPhoneNumbers = phoneNumbers.filter((_, i) => i !== index);
+    setPhoneNumbers(updatedPhoneNumbers);
   };
 
-  const sexChangeHandler = (event) => {
-    setSex(event.target.value);
-  };
-
-  const addPhoneNumber = () => {
-    setPhoneNumbersArray([...phoneNumbersArray, ""]);
-  };
-
-  const dynamicPhoneNumberChangeHandler = (index, event) => {
-    const updatedNumbers = phoneNumbersArray.map((number, i) =>
-      i === index ? event.target.value : number
+  const handlePhoneNumberChange = (index, value) => {
+    const updatedPhoneNumbers = phoneNumbers.map((phoneNumber, i) =>
+      i === index ? value : phoneNumber
     );
-    setPhoneNumbersArray(updatedNumbers);
+    setPhoneNumbers(updatedPhoneNumbers);
   };
 
-  const deletePhoneNumberHandler = (phoneNumber) => {
-    setPhoneNumbersArray((prevNumbers) =>
-      prevNumbers.filter((item) => item !== phoneNumber)
-    );
+  const handleAddEmail = () => {
+    setEmails([...emails, ""]);
   };
+
+  const handleDeleteEmail = (index) => {
+    const updatedEmails = emails.filter((_, i) => i !== index);
+    setEmails(updatedEmails);
+  };
+
+  const handleEmailChange = (index, value) => {
+    const updatedEmails = emails.map((email, i) =>
+      i === index ? value : email
+    );
+    setEmails(updatedEmails);
+  };
+
+  const handleSubmit = () => {
+    const contactInfo = {
+      firstName,
+      lastName,
+      age,
+      sex,
+      phoneNumbers,
+      emails,
+      address,
+    };
+    console.log("Submitted Contact Info:", contactInfo);
+    onClose();
+  };
+
+  useEffect(() => {
+    const isValid =
+      firstName && lastName && age && sex && emails && phoneNumbers;
+    setIsValidForm(isValid);
+  }, [firstName, lastName, age, sex, emails, phoneNumbers]);
 
   return (
     <Modal open={open} onClose={onClose}>
@@ -71,93 +86,161 @@ const NewConnection = ({ open, onClose, onAddContact }) => {
           top: "50%",
           left: "50%",
           transform: "translate(-50%, -50%)",
+          width: "80%",
+          maxHeight: "80%",
+          p: 4,
           bgcolor: "background.paper",
           boxShadow: 24,
-          p: 3,
-          outline: "none",
-          borderRadius: 3,
-          maxWidth: 500,
-          width: "100%",
+          overflow: "auto",
         }}
       >
         <Typography variant="h6" component="h2" gutterBottom>
-          New Connection
+          Contact Information
         </Typography>
         <TextField
-          name="firstName"
           label="First Name"
-          value={newContact.firstName}
-          onChange={handleInputChange}
-          id="firstName"
+          value={firstName}
+          onChange={(e) => setFirstName(e.target.value)}
           fullWidth
           margin="normal"
           required
         />
         <TextField
-          name="lastName"
           label="Last Name"
-          value={newContact.lastName}
-          onChange={handleInputChange}
-          id="lastName"
+          value={lastName}
+          onChange={(e) => setLastName(e.target.value)}
           fullWidth
           margin="normal"
           required
         />
-        <FormControl fullWidth required sx={{ maxWidth: 120 }}>
+        <TextField
+          label="Age"
+          type="number"
+          value={age}
+          onChange={(e) => setAge(e.target.value)}
+          fullWidth
+          margin="normal"
+          required
+        />
+        <FormControl fullWidth required>
           <InputLabel>Sex</InputLabel>
-          <Select label="Sex" value={sex} onChange={sexChangeHandler}>
-            <MenuItem value="">
-              <em>None</em>
-            </MenuItem>
-            {genders.map((gender, index) => (
-              <MenuItem key={index} value={gender}>
-                {gender}
-              </MenuItem>
-            ))}
+          <Select
+            value={sex}
+            onChange={(e) => setSex(e.target.value)}
+            label="Sex"
+          >
+            <MenuItem value="male">Male</MenuItem>
+            <MenuItem value="female">Female</MenuItem>
           </Select>
         </FormControl>
-
-        <CustomPhoneNumber />
-
-        <DynamicPhoneFields
-          phoneNumbersArray={phoneNumbersArray}
-          dynamicPhoneNumberChangeHandler={dynamicPhoneNumberChangeHandler}
-          deletePhoneNumberHandler={deletePhoneNumberHandler}
-        />
-
-        <IconButton aria-label="add phone number" onClick={addPhoneNumber}>
-          <AddBox className="text-theme-blue" />
-        </IconButton>
-
+        <Box mt={3}>
+          <Typography variant="subtitle1">Phone Numbers</Typography>
+          {phoneNumbers.map((phoneNumber, index) => (
+            <Grid
+              container
+              spacing={2}
+              alignItems="center"
+              key={`phoneNumber${index}`}
+            >
+              <Grid item xs={9}>
+                <TextField
+                  label="Phone Number"
+                  value={phoneNumber}
+                  onChange={(e) =>
+                    handlePhoneNumberChange(index, e.target.value)
+                  }
+                  fullWidth
+                  margin="normal"
+                  error={!isValidPhoneNumber(phoneNumber)}
+                  helperText={
+                    !isValidPhoneNumber(phoneNumber) && "Invalid phone number"
+                  }
+                />
+              </Grid>
+              <Grid item xs={3}>
+                {index === phoneNumbers.length - 1 && (
+                  <IconButton
+                    onClick={handleAddPhoneNumber}
+                    aria-label="Add Phone Number"
+                  >
+                    <AddBox />
+                  </IconButton>
+                )}
+                {index !== phoneNumbers.length - 1 && (
+                  <IconButton
+                    onClick={() => handleDeletePhoneNumber(index)}
+                    aria-label="Delete Phone Number"
+                  >
+                    <Delete />
+                  </IconButton>
+                )}
+              </Grid>
+            </Grid>
+          ))}
+        </Box>
+        <Box mt={3}>
+          <Typography variant="subtitle1">Emails</Typography>
+          {emails.map((email, index) => (
+            <Grid
+              container
+              spacing={2}
+              alignItems="center"
+              key={`email${index}`}
+            >
+              <Grid item xs={9}>
+                <TextField
+                  label="Email"
+                  value={email}
+                  onChange={(e) => handleEmailChange(index, e.target.value)}
+                  fullWidth
+                  margin="normal"
+                  error={!isValidEmail(email)}
+                  helperText={!isValidEmail(email) && "Invalid email"}
+                />
+              </Grid>
+              <Grid item xs={3}>
+                {index === emails.length - 1 && (
+                  <IconButton onClick={handleAddEmail} aria-label="Add Email">
+                    <AddBox />
+                  </IconButton>
+                )}
+                {index !== emails.length - 1 && (
+                  <IconButton
+                    onClick={() => handleDeleteEmail(index)}
+                    aria-label="Delete Email"
+                  >
+                    <Delete />
+                  </IconButton>
+                )}
+              </Grid>
+            </Grid>
+          ))}
+        </Box>
         <TextField
-          name="phoneNumber"
-          label="Phone Number"
-          value={newContact.phoneNumber}
-          onChange={handleInputChange}
+          label="Address"
+          value={address}
+          onChange={(e) => setAddress(e.target.value)}
           fullWidth
           margin="normal"
         />
-        <TextField
-          name="email"
-          label="Email Address"
-          value={newContact.email}
-          onChange={handleInputChange}
-          fullWidth
-          margin="normal"
-        />
-
-        <Button variant="contained" onClick={handleAddContact} sx={{ mt: 2 }}>
-          Add Connection
-        </Button>
+        <Box mt={3} textAlign="right">
+          <Button
+            variant="contained"
+            color="primary"
+            onClick={handleSubmit}
+            disabled={!isValidForm}
+          >
+            Add to Contacts
+          </Button>
+        </Box>
       </Box>
     </Modal>
   );
 };
 
-NewConnection.propTypes = {
+ModalPage.propTypes = {
   open: PropTypes.bool.isRequired,
   onClose: PropTypes.func.isRequired,
-  onAddContact: PropTypes.func.isRequired,
 };
 
-export default NewConnection;
+export default ModalPage;
