@@ -32,13 +32,13 @@ TextMaskCustom.propTypes = {
 const CustomPhoneNumber = () => {
   const [values, setValues] = useState({
     textmask: "",
-    numberformat: "1320",
   });
   const phoneChangeHandler = (event) => {
     setValues({
       ...values,
       [event.target.name]: event.target.value,
     });
+    console.log(values);
   };
   return (
     <>
