@@ -1,8 +1,10 @@
 import { createSlice } from "@reduxjs/toolkit";
+import users from "../constants/users";
 
 const authSlice = createSlice({
   name: "auth",
   initialState: {
+    systemUsers: users,
     isLoggedIn: null,
     user: null,
     userType: null,
@@ -34,9 +36,21 @@ const authSlice = createSlice({
       state.user = action.payload.username;
       state.userType = action.payload.userType;
     },
+    signUpUser: (state, action) => {
+      const newUserId = Math.floor(
+        Math.random() * state.systemUsers.length * 100
+      );
+      const newUser = { id: newUserId, ...action.payload };
+
+      state.systemUsers.push(newUser);
+
+      state.isLoggedIn = true;
+      state.user = action.payload.username;
+      state.userType = action.payload.userType;
+    },
   },
 });
 
-export const { logIn, logOut, signUp } = authSlice.actions;
+export const { logIn, logOut, signUp, signUpUser } = authSlice.actions;
 
 export default authSlice.reducer;
