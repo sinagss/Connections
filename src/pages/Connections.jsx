@@ -34,8 +34,17 @@ const Connections = () => {
   return (
     <>
       <Toolbar />
-      <Box>
-        <Container className="mx-0 my-auto max-w-xl">
+      <Box
+        display="flex"
+        flexDirection={{ xs: "column", sm: "column" }}
+        alignItems={{ xs: "center", sm: "center" }}
+        justifyContent="center"
+        minHeight="100vh"
+        p={4}
+        textAlign="center"
+        overflow="hidden"
+      >
+        <Container maxWidth={{ xs: "500px", sm: "500px" }} margin="auto">
           <Typography variant="h4" gutterBottom>
             Connections
           </Typography>
