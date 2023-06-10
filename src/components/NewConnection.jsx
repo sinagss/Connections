@@ -72,9 +72,8 @@ const ModalPage = ({ open, onClose }) => {
       emails,
       address,
     };
-    console.log("Submitted Contact Info:", contactInfo);
     dispatch(addConnection(contactInfo));
-    // onClose();
+    onClose();
   };
 
   useEffect(() => {

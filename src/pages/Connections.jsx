@@ -10,11 +10,13 @@ import {
   Container,
 } from "@mui/material";
 import { Add as AddIcon } from "@mui/icons-material";
-import contacts from "../data/connections.json";
 import NewConnection from "../components/NewConnection";
+import { useSelector } from "react-redux";
 
 const Connections = () => {
   const [isModalOpen, setIsModalOpen] = useState(false);
+
+  const contacts = useSelector((state) => state.connections.connections);
 
   const handleModalOpen = () => {
     setIsModalOpen(true);
@@ -24,12 +26,7 @@ const Connections = () => {
     setIsModalOpen(false);
   };
 
-  const handleAddContact = (newContact) => {
-    // Logic to add the new contact to the list
-
-    console.log("New contact:", newContact);
-
-    // Close the modal
+  const handleAddContact = () => {
     setIsModalOpen(false);
   };
 
@@ -53,24 +50,29 @@ const Connections = () => {
               >
                 <ListItemText
                   primary={`${contact.firstName} ${contact.lastName}`}
+                />
+                <ListItemText
+                  primary="Phone:"
                   secondary={
-                    <>
-                      <Typography
-                        component="span"
-                        variant="body2"
-                        color="textPrimary"
-                      >
-                        Phone: {contact.phoneNumbers[0].number}
-                      </Typography>
-                      <br />
-                      <Typography
-                        component="span"
-                        variant="body2"
-                        color="textPrimary"
-                      >
-                        Email: {contact.emails[0].email}
-                      </Typography>
-                    </>
+                    <Typography
+                      component="span"
+                      variant="body2"
+                      color="textPrimary"
+                    >
+                      {contact.phoneNumbers[0]}
+                    </Typography>
+                  }
+                />
+                <ListItemText
+                  primary="Email:"
+                  secondary={
+                    <Typography
+                      component="span"
+                      variant="body2"
+                      color="textPrimary"
+                    >
+                      {contact.emails[0]}
+                    </Typography>
                   }
                 />
               </ListItem>

@@ -6,7 +6,7 @@ import LogIn from "./pages/LogIn";
 import AppBar from "./components/AppBar";
 import AboutPage from "./pages/About";
 import { Provider } from "react-redux";
-import store from "./store/store";
+import { store } from "./store/store";
 import Connections from "./pages/Connections";
 
 function App() {
