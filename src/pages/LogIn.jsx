@@ -15,6 +15,7 @@ import { logIn } from "../store/authSlice";
 import { useNavigate } from "react-router-dom";
 import { useState } from "react";
 import users from "../constants/users";
+import { Link as RouterLink } from "react-router-dom";
 
 function Copyright(props) {
   const mySiteUrl = import.meta.env.VITE_MY_WEBSITE_URL;
@@ -117,14 +118,14 @@ export default function LogIn() {
           </Button>
           <Grid container>
             <Grid item xs>
-              <Link href="#" variant="body2">
-                Forgot password?
-              </Link>
+              <RouterLink to="/reset-pass">
+                <Link variant="body2">Forgot password?</Link>
+              </RouterLink>
             </Grid>
             <Grid item>
-              <Link href="#" variant="body2">
-                {"Don't have an account? Sign Up"}
-              </Link>
+              <RouterLink to="/signup">
+                <Link variant="body2">{"Don't have an account? Sign Up"}</Link>
+              </RouterLink>
             </Grid>
           </Grid>
         </Box>
