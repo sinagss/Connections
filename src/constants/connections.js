@@ -12,6 +12,7 @@ export const connections = [
     phoneNumbers: ["123-456-7890", "987-654-3210"],
     emails: ["johndoe@example.com", "john.doe@company.com"],
     jobTitle: "Software Engineer",
+    favorite: false,
   },
   {
     id: 2,
@@ -26,6 +27,7 @@ export const connections = [
     phoneNumbers: ["111-222-3333", "444-555-6666"],
     emails: ["jane.smith@example.com", "jane.smith@company.com"],
     jobTitle: "Marketing Manager",
+    favorite: false,
   },
   {
     id: 3,
@@ -40,6 +42,7 @@ export const connections = [
     phoneNumbers: ["555-123-4567", "111-222-3333"],
     emails: ["david.johnson@example.com", "david.johnson@company.com"],
     jobTitle: "Accountant",
+    favorite: false,
   },
   {
     id: 4,
@@ -54,6 +57,7 @@ export const connections = [
     phoneNumbers: ["999-888-7777", "444-555-6666"],
     emails: ["emily.wilson@example.com", "emily.wilson@company.com"],
     jobTitle: "Graphic Designer",
+    favorite: false,
   },
   {
     id: 5,
@@ -68,6 +72,7 @@ export const connections = [
     phoneNumbers: ["777-888-9999", "555-444-3333"],
     emails: ["michael.brown@example.com", "michael.brown@company.com"],
     jobTitle: "Sales Manager",
+    favorite: false,
   },
   {
     id: 6,
@@ -82,6 +87,7 @@ export const connections = [
     phoneNumbers: ["333-444-5555", "888-999-0000"],
     emails: ["sarah.johnson@example.com", "sarah.johnson@company.com"],
     jobTitle: "Software Developer",
+    favorite: false,
   },
   {
     id: 7,
@@ -96,10 +102,10 @@ export const connections = [
     phoneNumbers: ["222-333-4444", "555-444-3333"],
     emails: [
       "christopher.taylor@example.com",
-
       "christopher.taylor@company.com",
     ],
     jobTitle: "Project Manager",
+    favorite: false,
   },
   {
     id: 8,
@@ -114,6 +120,7 @@ export const connections = [
     phoneNumbers: ["777-888-9999", "111-222-3333"],
     emails: ["emma.clark@example.com", "emma.clark@company.com"],
     jobTitle: "Marketing Coordinator",
+    favorite: false,
   },
   {
     id: 9,
@@ -128,6 +135,7 @@ export const connections = [
     phoneNumbers: ["333-444-5555", "888-999-0000"],
     emails: ["jacob.robinson@example.com", "jacob.robinson@company.com"],
     jobTitle: "Financial Analyst",
+    favorite: false,
   },
   {
     id: 10,
@@ -142,6 +150,7 @@ export const connections = [
     phoneNumbers: ["222-333-4444", "555-444-3333"],
     emails: ["mia.baker@example.com", "mia.baker@company.com"],
     jobTitle: "Product Manager",
+    favorite: false,
   },
   {
     id: 11,
@@ -156,6 +165,7 @@ export const connections = [
     phoneNumbers: ["333-444-5555", "888-999-0000"],
     emails: ["liam.gonzalez@example.com", "liam.gonzalez@company.com"],
     jobTitle: "Software Engineer",
+    favorite: false,
   },
   {
     id: 12,
@@ -170,6 +180,7 @@ export const connections = [
     phoneNumbers: ["777-888-9999", "555-444-3333"],
     emails: ["charlotte.lopez@example.com", "charlotte.lopez@company.com"],
     jobTitle: "Marketing Manager",
+    favorite: false,
   },
   {
     id: 13,
@@ -178,41 +189,74 @@ export const connections = [
     age: 35,
     birthDay: "1987-03-02",
     sex: "Male",
-    city: "Miami",
-    state: "Florida",
-    address: "543 Pine Street",
-    phoneNumbers: ["333-444-5555", "888-999-0000"],
+    city: "San Diego",
+    state: "California",
+    address: "456 Pine Street",
+    phoneNumbers: ["222-333-4444", "555-444-3333"],
     emails: ["henry.hernandez@example.com", "henry.hernandez@company.com"],
-    jobTitle: "Sales Manager",
+    jobTitle: "Accountant",
+    favorite: false,
   },
   {
     id: 14,
-    firstName: "Amelia",
-    lastName: "Hall",
-    age: 30,
-    birthDay: "1992-10-20",
+    firstName: "Ava",
+    lastName: "Garcia",
+    age: 32,
+    birthDay: "1990-11-08",
     sex: "Female",
-    city: "Chicago",
-    state: "Illinois",
-    address: "456 Elm Street",
-    phoneNumbers: ["222-333-4444", "555-444-3333"],
-    emails: ["amelia.hall@example.com", "amelia.hall@company.com"],
-    jobTitle: "HR Manager",
+    city: "Atlanta",
+    state: "Georgia",
+    address: "654 Oak Avenue",
+    phoneNumbers: ["777-888-9999", "111-222-3333"],
+    emails: ["ava.garcia@example.com", "ava.garcia@company.com"],
+    jobTitle: "Graphic Designer",
+    favorite: false,
   },
   {
     id: 15,
-    firstName: "William",
-    lastName: "Garcia",
-    age: 32,
-    birthDay: "1990-12-08",
+    firstName: "Oliver",
+    lastName: "Martinez",
+    age: 37,
+    birthDay: "1985-09-18",
     sex: "Male",
-    city: "New York",
-    state: "New York",
-    address: "789 Oak Avenue",
-    phoneNumbers: ["777-888-9999", "111-222-3333"],
-    emails: ["william.garcia@example.com", "william.garcia@company.com"],
-    jobTitle: "Finance Manager",
+    city: "Miami",
+    state: "Florida",
+    address: "789 Pine Street",
+    phoneNumbers: ["333-444-5555", "888-999-0000"],
+    emails: ["oliver.martinez@example.com", "oliver.martinez@company.com"],
+    jobTitle: "Sales Manager",
+    favorite: false,
+  },
+  {
+    id: 16,
+    firstName: "Sophia",
+    lastName: "Lopez",
+    age: 29,
+    birthDay: "1993-04-05",
+    sex: "Female",
+    city: "Chicago",
+    state: "Illinois",
+    address: "123 Oak Street",
+    phoneNumbers: ["222-333-4444", "555-444-3333"],
+    emails: ["sophia.lopez@example.com", "sophia.lopez@company.com"],
+    jobTitle: "Software Developer",
+    favorite: false,
   },
 ];
 
-export default connections;
+export const getConnections = () => {
+  return connections;
+};
+
+export const getFavoriteConnections = () => {
+  return connections.filter((connection) => connection.favorite);
+};
+
+export const toggleFavorite = (id) => {
+  const connection = connections.find((connection) => connection.id === id);
+  if (connection) {
+    connection.favorite = !connection.favorite;
+    return true;
+  }
+  return false;
+};
