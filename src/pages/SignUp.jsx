@@ -13,7 +13,11 @@ import {
   MenuItem,
 } from "@mui/material";
 import { isValidEmail } from "../utils/validationUtils.js";
-import { Link as RouterLink } from "react-router-dom";
+import { Link as RouterLink, useNavigate } from "react-router-dom";
+import { useDispatch } from "react-redux";
+import { signUpUser } from "../store/authSlice.js";
+import { useEffect } from "react";
+import { useCallback } from "react";
 
 const SignUp = () => {
   const [firstName, setFirstName] = useState("");
@@ -26,22 +30,27 @@ const SignUp = () => {
   const [type, setType] = useState("");
   const [isFormValid, setIsFormValid] = useState(false);
 
-  const handleSignup = (e) => {
-    e.preventDefault();
-    // Handle signup logic here
-    console.log("Signup:", {
-      firstName,
-      lastName,
-      age,
-      sex,
-      username,
-      email,
-      password,
-      type,
-    });
+  const newUser = {
+    firstName,
+    lastName,
+    age,
+    sex,
+    username,
+    email,
+    password,
+    type,
   };
 
-  const validateForm = () => {
+  const nav = useNavigate();
+  const dispatch = useDispatch();
+
+  const handleSignup = (e) => {
+    e.preventDefault();
+    dispatch(signUpUser(newUser));
+    nav("/");
+  };
+
+  const validateForm = useCallback(() => {
     const isValid =
       firstName &&
       lastName &&
@@ -54,7 +63,21 @@ const SignUp = () => {
       password.length >= 3 &&
       type;
     setIsFormValid(isValid);
-  };
+  }, [firstName, lastName, age, sex, username, email, password, type]);
+
+  useEffect(() => {
+    validateForm();
+  }, [
+    firstName,
+    lastName,
+    age,
+    sex,
+    username,
+    email,
+    password,
+    type,
+    validateForm,
+  ]);
 
   return (
     <Container maxWidth="sm">
