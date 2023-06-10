@@ -15,6 +15,8 @@ import {
 } from "@mui/material";
 import { AddBox, Delete } from "@mui/icons-material";
 import { isValidEmail, isValidPhoneNumber } from "../utils/validationUtils";
+import { useDispatch } from "react-redux";
+import { addConnection } from "../store/connectionsSlice";
 
 const ModalPage = ({ open, onClose }) => {
   const [isValidForm, setIsValidForm] = useState(false);
@@ -25,6 +27,8 @@ const ModalPage = ({ open, onClose }) => {
   const [phoneNumbers, setPhoneNumbers] = useState([""]);
   const [emails, setEmails] = useState([""]);
   const [address, setAddress] = useState("");
+
+  const dispatch = useDispatch();
 
   const handleAddPhoneNumber = () => {
     setPhoneNumbers([...phoneNumbers, ""]);
@@ -69,7 +73,8 @@ const ModalPage = ({ open, onClose }) => {
       address,
     };
     console.log("Submitted Contact Info:", contactInfo);
-    onClose();
+    dispatch(addConnection(contactInfo));
+    // onClose();
   };
 
   useEffect(() => {
@@ -92,6 +97,7 @@ const ModalPage = ({ open, onClose }) => {
           bgcolor: "background.paper",
           boxShadow: 24,
           overflow: "auto",
+          borderRadius: "5px",
         }}
       >
         <Typography variant="h6" component="h2" gutterBottom>
