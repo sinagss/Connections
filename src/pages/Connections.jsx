@@ -9,8 +9,10 @@ import {
   Toolbar,
   Container,
   Box,
+  IconButton,
+  ListSubheader,
 } from "@mui/material";
-import { Add as AddIcon } from "@mui/icons-material";
+import { Add as AddIcon, Mail, Phone } from "@mui/icons-material";
 import NewConnection from "../components/NewConnection";
 import { useSelector } from "react-redux";
 
@@ -43,49 +45,83 @@ const Connections = () => {
         p={4}
         textAlign="center"
         overflow="hidden"
+        margin="auto"
       >
-        <Container maxWidth={{ xs: "500px", sm: "500px" }} margin="auto">
+        <Container margin="auto">
           <Typography variant="h4" gutterBottom>
             Connections
           </Typography>
-          <List>
+          <List
+            sx={{
+              width: "100%",
+              maxWidth: "auto",
+              bgcolor: "background.paper",
+            }}
+          >
             {contacts.map((contact, index) => (
               <React.Fragment key={index}>
                 <ListItem
-                  button
                   alignItems="flex-start"
+                  disablePadding
+                  disableGutters
                   sx={{
                     cursor: "pointer",
+                    display: "grid",
+                    gridTemplateColumns: {
+                      xs: "1fr 2fr 1fr 1fr",
+                      sm: "1fr 1fr 1fr 1fr",
+                    },
                     "&:hover": { backgroundColor: "action.hover" },
                   }}
+                  secondaryAction={
+                    <>
+                      <IconButton
+                        component="a"
+                        href={"mailto:" + contact.emails[0]}
+                      >
+                        <Mail />
+                      </IconButton>
+                      <IconButton
+                        component="a"
+                        href={`tel:${contact.phoneNumbers[0]}`}
+                      >
+                        <Phone />
+                      </IconButton>
+                    </>
+                  }
                 >
                   <ListItemText
+                    sx={{ paddingRight: 14 }}
                     primary={`${contact.firstName} ${contact.lastName}`}
                   />
                   <ListItemText
                     primary="Phone:"
                     secondary={
-                      <Typography
-                        component="span"
-                        variant="body2"
-                        color="textPrimary"
-                      >
+                      <>
+                        <Typography
+                          sx={{ display: "flex", alignItems: "flex-end" }}
+                          component="span"
+                          variant="body2"
+                          color="textPrimary"
+                        ></Typography>
                         {contact.phoneNumbers[0]}
-                      </Typography>
+                      </>
                     }
                   />
                   <ListItemText
+                    sx={{ display: { xs: "none", sm: "block" } }}
                     primary="Email:"
+                    component="span"
                     secondary={
-                      <Typography
-                        component="span"
-                        variant="body2"
-                        color="textPrimary"
-                        display="flex"
-                        flexWrap="wrap"
-                      >
+                      <>
+                        <Typography
+                          display="inline"
+                          component="span"
+                          variant="body2"
+                          color="textPrimary"
+                        ></Typography>
                         {contact.emails[0]}
-                      </Typography>
+                      </>
                     }
                   />
                 </ListItem>
