@@ -10,11 +10,10 @@ import Box from "@mui/material/Box";
 import LockOutlinedIcon from "@mui/icons-material/LockOutlined";
 import Typography from "@mui/material/Typography";
 import Container from "@mui/material/Container";
-import { useDispatch } from "react-redux";
+import { useDispatch, useSelector } from "react-redux";
 import { logIn } from "../store/authSlice";
 import { useNavigate } from "react-router-dom";
 import { useState } from "react";
-import users from "../constants/users";
 import { Link as RouterLink } from "react-router-dom";
 
 function Copyright(props) {
@@ -36,8 +35,8 @@ function Copyright(props) {
   );
 }
 
-function credentialCheck(email, password) {
-  const user = users.find(
+function credentialCheck(systemUsers, email, password) {
+  const user = systemUsers.find(
     (user) => user.email === email && user.password === password
   );
   return user;
@@ -48,13 +47,14 @@ export default function LogIn() {
 
   const dispatch = useDispatch();
   const nav = useNavigate();
+  const systemUsers = useSelector((state) => state.authenticator.systemUsers);
 
   const handleSubmit = (event) => {
     event.preventDefault();
     const data = new FormData(event.currentTarget);
     const email = data.get("email");
     const password = data.get("password");
-    const user = credentialCheck(email, password);
+    const user = credentialCheck(systemUsers, email, password);
 
     if (user) {
       dispatch(logIn({ user, email: email, password: password }));
