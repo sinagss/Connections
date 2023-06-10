@@ -17,6 +17,7 @@ import MenuIcon from "@mui/icons-material/Menu";
 import ListItemLink from "../components/UI/ListItemLink";
 import AvatarMenu from "../components/UI/AvatarMenu";
 import { useSelector } from "react-redux";
+import logo from "../assets/user.png";
 
 import LoginButton from "./UI/LoginButton";
 
@@ -76,7 +77,7 @@ const DrawerAppBar = (props) => {
               textDecoration: "none",
             }}
           >
-            LOGO
+            <img src={logo} alt="app logo" />
           </Typography>
           <IconButton
             color="inherit"
