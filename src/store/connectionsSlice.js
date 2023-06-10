@@ -16,7 +16,6 @@ const connectionsSlice = createSlice({
       const newConnetion = { id: randomId, ...action.payload };
 
       state.connections.push(newConnetion);
-      console.log(state.connections);
     },
     removeConnection: (state, action) => {},
     editConnection: (state, action) => {},
