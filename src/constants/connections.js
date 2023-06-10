@@ -9,26 +9,8 @@ export const connections = [
     city: "New York",
     state: "New York",
     address: "123 Main Street",
-    phoneNumbers: [
-      {
-        type: "Home",
-        number: "123-456-7890",
-      },
-      {
-        type: "Mobile",
-        number: "987-654-3210",
-      },
-    ],
-    emails: [
-      {
-        type: "Personal",
-        email: "johndoe@example.com",
-      },
-      {
-        type: "Work",
-        email: "john.doe@company.com",
-      },
-    ],
+    phoneNumbers: ["123-456-7890", "987-654-3210"],
+    emails: ["johndoe@example.com", "john.doe@company.com"],
     jobTitle: "Software Engineer",
   },
   {
@@ -41,26 +23,8 @@ export const connections = [
     city: "Los Angeles",
     state: "California",
     address: "456 Elm Street",
-    phoneNumbers: [
-      {
-        type: "Home",
-        number: "111-222-3333",
-      },
-      {
-        type: "Mobile",
-        number: "444-555-6666",
-      },
-    ],
-    emails: [
-      {
-        type: "Personal",
-        email: "jane.smith@example.com",
-      },
-      {
-        type: "Work",
-        email: "jane.smith@company.com",
-      },
-    ],
+    phoneNumbers: ["111-222-3333", "444-555-6666"],
+    emails: ["jane.smith@example.com", "jane.smith@company.com"],
     jobTitle: "Marketing Manager",
   },
   {
@@ -73,26 +37,8 @@ export const connections = [
     city: "Chicago",
     state: "Illinois",
     address: "789 Oak Avenue",
-    phoneNumbers: [
-      {
-        type: "Home",
-        number: "555-123-4567",
-      },
-      {
-        type: "Mobile",
-        number: "111-222-3333",
-      },
-    ],
-    emails: [
-      {
-        type: "Personal",
-        email: "david.johnson@example.com",
-      },
-      {
-        type: "Work",
-        email: "david.johnson@company.com",
-      },
-    ],
+    phoneNumbers: ["555-123-4567", "111-222-3333"],
+    emails: ["david.johnson@example.com", "david.johnson@company.com"],
     jobTitle: "Accountant",
   },
   {
@@ -105,26 +51,8 @@ export const connections = [
     city: "Seattle",
     state: "Washington",
     address: "567 Pine Street",
-    phoneNumbers: [
-      {
-        type: "Home",
-        number: "999-888-7777",
-      },
-      {
-        type: "Mobile",
-        number: "444-555-6666",
-      },
-    ],
-    emails: [
-      {
-        type: "Personal",
-        email: "emily.wilson@example.com",
-      },
-      {
-        type: "Work",
-        email: "emily.wilson@company.com",
-      },
-    ],
+    phoneNumbers: ["999-888-7777", "444-555-6666"],
+    emails: ["emily.wilson@example.com", "emily.wilson@company.com"],
     jobTitle: "Graphic Designer",
   },
   {
@@ -137,26 +65,8 @@ export const connections = [
     city: "Houston",
     state: "Texas",
     address: "321 Oak Street",
-    phoneNumbers: [
-      {
-        type: "Home",
-        number: "777-888-9999",
-      },
-      {
-        type: "Mobile",
-        number: "555-444-3333",
-      },
-    ],
-    emails: [
-      {
-        type: "Personal",
-        email: "michael.brown@example.com",
-      },
-      {
-        type: "Work",
-        email: "michael.brown@company.com",
-      },
-    ],
+    phoneNumbers: ["777-888-9999", "555-444-3333"],
+    emails: ["michael.brown@example.com", "michael.brown@company.com"],
     jobTitle: "Sales Manager",
   },
   {
@@ -169,26 +79,8 @@ export const connections = [
     city: "Boston",
     state: "Massachusetts",
     address: "789 Elm Street",
-    phoneNumbers: [
-      {
-        type: "Home",
-        number: "333-444-5555",
-      },
-      {
-        type: "Mobile",
-        number: "888-999-0000",
-      },
-    ],
-    emails: [
-      {
-        type: "Personal",
-        email: "sarah.johnson@example.com",
-      },
-      {
-        type: "Work",
-        email: "sarah.johnson@company.com",
-      },
-    ],
+    phoneNumbers: ["333-444-5555", "888-999-0000"],
+    emails: ["sarah.johnson@example.com", "sarah.johnson@company.com"],
     jobTitle: "Software Developer",
   },
   {
@@ -201,25 +93,11 @@ export const connections = [
     city: "San Francisco",
     state: "California",
     address: "123 Pine Street",
-    phoneNumbers: [
-      {
-        type: "Home",
-        number: "222-333-4444",
-      },
-      {
-        type: "Mobile",
-        number: "555-444-3333",
-      },
-    ],
+    phoneNumbers: ["222-333-4444", "555-444-3333"],
     emails: [
-      {
-        type: "Personal",
-        email: "christopher.taylor@example.com",
-      },
-      {
-        type: "Work",
-        email: "christopher.taylor@company.com",
-      },
+      "christopher.taylor@example.com",
+
+      "christopher.taylor@company.com",
     ],
     jobTitle: "Project Manager",
   },
@@ -233,26 +111,8 @@ export const connections = [
     city: "Seattle",
     state: "Washington",
     address: "456 Oak Avenue",
-    phoneNumbers: [
-      {
-        type: "Home",
-        number: "777-888-9999",
-      },
-      {
-        type: "Mobile",
-        number: "111-222-3333",
-      },
-    ],
-    emails: [
-      {
-        type: "Personal",
-        email: "emma.clark@example.com",
-      },
-      {
-        type: "Work",
-        email: "emma.clark@company.com",
-      },
-    ],
+    phoneNumbers: ["777-888-9999", "111-222-3333"],
+    emails: ["emma.clark@example.com", "emma.clark@company.com"],
     jobTitle: "Marketing Coordinator",
   },
   {
@@ -265,26 +125,8 @@ export const connections = [
     city: "Denver",
     state: "Colorado",
     address: "789 Elm Street",
-    phoneNumbers: [
-      {
-        type: "Home",
-        number: "333-444-5555",
-      },
-      {
-        type: "Mobile",
-        number: "888-999-0000",
-      },
-    ],
-    emails: [
-      {
-        type: "Personal",
-        email: "jacob.robinson@example.com",
-      },
-      {
-        type: "Work",
-        email: "jacob.robinson@company.com",
-      },
-    ],
+    phoneNumbers: ["333-444-5555", "888-999-0000"],
+    emails: ["jacob.robinson@example.com", "jacob.robinson@company.com"],
     jobTitle: "Financial Analyst",
   },
   {
@@ -297,26 +139,8 @@ export const connections = [
     city: "Austin",
     state: "Texas",
     address: "654 Maple Lane",
-    phoneNumbers: [
-      {
-        type: "Home",
-        number: "222-333-4444",
-      },
-      {
-        type: "Mobile",
-        number: "555-444-3333",
-      },
-    ],
-    emails: [
-      {
-        type: "Personal",
-        email: "mia.baker@example.com",
-      },
-      {
-        type: "Work",
-        email: "mia.baker@company.com",
-      },
-    ],
+    phoneNumbers: ["222-333-4444", "555-444-3333"],
+    emails: ["mia.baker@example.com", "mia.baker@company.com"],
     jobTitle: "Product Manager",
   },
   {
@@ -329,26 +153,8 @@ export const connections = [
     city: "Dallas",
     state: "Texas",
     address: "987 Elm Street",
-    phoneNumbers: [
-      {
-        type: "Home",
-        number: "333-444-5555",
-      },
-      {
-        type: "Mobile",
-        number: "888-999-0000",
-      },
-    ],
-    emails: [
-      {
-        type: "Personal",
-        email: "liam.gonzalez@example.com",
-      },
-      {
-        type: "Work",
-        email: "liam.gonzalez@company.com",
-      },
-    ],
+    phoneNumbers: ["333-444-5555", "888-999-0000"],
+    emails: ["liam.gonzalez@example.com", "liam.gonzalez@company.com"],
     jobTitle: "Software Engineer",
   },
   {
@@ -361,26 +167,8 @@ export const connections = [
     city: "Phoenix",
     state: "Arizona",
     address: "321 Oak Street",
-    phoneNumbers: [
-      {
-        type: "Home",
-        number: "777-888-9999",
-      },
-      {
-        type: "Mobile",
-        number: "555-444-3333",
-      },
-    ],
-    emails: [
-      {
-        type: "Personal",
-        email: "charlotte.lopez@example.com",
-      },
-      {
-        type: "Work",
-        email: "charlotte.lopez@company.com",
-      },
-    ],
+    phoneNumbers: ["777-888-9999", "555-444-3333"],
+    emails: ["charlotte.lopez@example.com", "charlotte.lopez@company.com"],
     jobTitle: "Marketing Manager",
   },
   {
@@ -393,26 +181,8 @@ export const connections = [
     city: "Miami",
     state: "Florida",
     address: "543 Pine Street",
-    phoneNumbers: [
-      {
-        type: "Home",
-        number: "333-444-5555",
-      },
-      {
-        type: "Mobile",
-        number: "888-999-0000",
-      },
-    ],
-    emails: [
-      {
-        type: "Personal",
-        email: "henry.hernandez@example.com",
-      },
-      {
-        type: "Work",
-        email: "henry.hernandez@company.com",
-      },
-    ],
+    phoneNumbers: ["333-444-5555", "888-999-0000"],
+    emails: ["henry.hernandez@example.com", "henry.hernandez@company.com"],
     jobTitle: "Sales Manager",
   },
   {
@@ -425,26 +195,8 @@ export const connections = [
     city: "Chicago",
     state: "Illinois",
     address: "456 Elm Street",
-    phoneNumbers: [
-      {
-        type: "Home",
-        number: "222-333-4444",
-      },
-      {
-        type: "Mobile",
-        number: "555-444-3333",
-      },
-    ],
-    emails: [
-      {
-        type: "Personal",
-        email: "amelia.hall@example.com",
-      },
-      {
-        type: "Work",
-        email: "amelia.hall@company.com",
-      },
-    ],
+    phoneNumbers: ["222-333-4444", "555-444-3333"],
+    emails: ["amelia.hall@example.com", "amelia.hall@company.com"],
     jobTitle: "HR Manager",
   },
   {
@@ -457,26 +209,8 @@ export const connections = [
     city: "New York",
     state: "New York",
     address: "789 Oak Avenue",
-    phoneNumbers: [
-      {
-        type: "Home",
-        number: "777-888-9999",
-      },
-      {
-        type: "Mobile",
-        number: "111-222-3333",
-      },
-    ],
-    emails: [
-      {
-        type: "Personal",
-        email: "william.garcia@example.com",
-      },
-      {
-        type: "Work",
-        email: "william.garcia@company.com",
-      },
-    ],
+    phoneNumbers: ["777-888-9999", "111-222-3333"],
+    emails: ["william.garcia@example.com", "william.garcia@company.com"],
     jobTitle: "Finance Manager",
   },
 ];
