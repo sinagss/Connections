@@ -81,6 +81,8 @@ const Connections = () => {
                         component="span"
                         variant="body2"
                         color="textPrimary"
+                        display="flex"
+                        flexWrap="wrap"
                       >
                         {contact.emails[0]}
                       </Typography>
