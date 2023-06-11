@@ -1,15 +1,6 @@
 import { useState } from "react";
-import {
-  Typography,
-  List,
-  Fab,
-  Toolbar,
-  Container,
-  Box,
-} from "@mui/material";
-import {
-  Add as AddIcon,
-} from "@mui/icons-material";
+import { Typography, List, Fab, Toolbar, Container, Box } from "@mui/material";
+import { Add as AddIcon } from "@mui/icons-material";
 import NewConnection from "../components/NewConnection";
 import { useSelector } from "react-redux";
 import CustomListItem from "../components/UI/CustomListItem";
@@ -57,7 +48,12 @@ const Connections = () => {
             }}
           >
             {contacts.map((contact, index) => (
-              <CustomListItem key={index} object={contact} index={index} />
+              <CustomListItem
+                key={index}
+                object={contact}
+                index={index}
+                connectionsLength={contacts.length}
+              />
             ))}
           </List>
           <Fab
