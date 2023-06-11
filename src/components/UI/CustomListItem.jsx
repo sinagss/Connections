@@ -10,8 +10,9 @@ import {
 } from "@mui/material";
 import { Mail, Phone, Star, StarRateOutlined } from "@mui/icons-material";
 import PropTypes from "prop-types";
+import { yellow } from "@mui/material/colors";
 
-const CustomListItem = ({ object, index }) => {
+const CustomListItem = ({ object, index, connectionsLength }) => {
   const [fav, setFav] = useState(false);
 
   const favClickHandler = () => {
@@ -35,14 +36,17 @@ const CustomListItem = ({ object, index }) => {
         }}
         secondaryAction={
           <>
-            <IconButton component="a" href={`mailto:${object.emails[0]}`}>
+            <IconButton
+              component="a"
+              href={`mailto:${object.emails[0]}?subject=Use Virtual Connections! It's great!!!&body=Hey, ${object.firstName} Use Virtual Connections! It's great 😲🤯!!!%0D%0A %0D%0AThis App is created by ⭐Sina Ghassaei⭐ with ❤️ %0D%0A%0D%0A`}
+            >
               <Mail />
             </IconButton>
             <IconButton component="a" href={`tel:${object.phoneNumbers[0]}`}>
               <Phone />
             </IconButton>
             <IconButton onClick={favClickHandler}>
-              {fav ? <Star /> : <StarRateOutlined />}
+              {fav ? <Star sx={{ color: yellow }} /> : <StarRateOutlined />}
             </IconButton>
           </>
         }
@@ -86,7 +90,9 @@ const CustomListItem = ({ object, index }) => {
           }
         />
       </ListItem>
-      {index < object.length - 1 && <Divider variant="inset" component="li" />}
+      {index < connectionsLength - 1 && (
+        <Divider variant="inset" component="li" />
+      )}
     </React.Fragment>
   );
 };
@@ -99,6 +105,7 @@ CustomListItem.propTypes = {
     phoneNumbers: PropTypes.arrayOf(PropTypes.string).isRequired,
   }).isRequired,
   index: PropTypes.number.isRequired,
+  connectionsLength: PropTypes.number.isRequired,
 };
 
 export default CustomListItem;
