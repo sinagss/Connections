@@ -34,7 +34,8 @@ const Connections = () => {
         p={4}
         textAlign="center"
         overflow="hidden"
-        margin="auto"
+        marginX="auto"
+        marginBottom="1.5rem"
       >
         <Container margin="auto">
           <Typography variant="h4" gutterBottom>
