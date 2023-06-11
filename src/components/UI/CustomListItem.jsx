@@ -10,13 +10,22 @@ import {
 } from "@mui/material";
 import { Mail, Phone, Star, StarRateOutlined } from "@mui/icons-material";
 import PropTypes from "prop-types";
+import { useDispatch } from "react-redux";
+import { favoriteConnection } from "../../store/connectionsSlice";
+import { useCallback } from "react";
 
 const CustomListItem = ({ object, index, connectionsLength }) => {
-  const [fav, setFav] = useState(false);
+  const [fav, setFav] = useState(object.favorite || false);
 
-  const favClickHandler = () => {
-    setFav(!fav);
-  };
+  const dispatch = useDispatch();
+
+  const favClickHandler = useCallback(() => {
+    setFav((prevFav) => {
+      const newFav = !prevFav;
+      dispatch(favoriteConnection({ object, index, fav: newFav }));
+      return newFav;
+    });
+  }, [object, index, dispatch]);
 
   return (
     <React.Fragment>
@@ -107,6 +116,7 @@ CustomListItem.propTypes = {
     lastName: PropTypes.string.isRequired,
     emails: PropTypes.arrayOf(PropTypes.string).isRequired,
     phoneNumbers: PropTypes.arrayOf(PropTypes.string).isRequired,
+    favorite: PropTypes.bool,
   }).isRequired,
   index: PropTypes.number.isRequired,
   connectionsLength: PropTypes.number.isRequired,

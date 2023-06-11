@@ -20,15 +20,21 @@ const connectionsSlice = createSlice({
     removeConnection: (state, action) => {},
     editConnection: (state, action) => {},
     favoriteConnection: (state, action) => {
-      const updatedConnection = {
-        ...action.payload,
-        favorite: action.payload.favorite,
-      };
+      const { object, fav } = action.payload;
+      state.connections = state.connections.map((connection) =>
+        connection.id === object.id
+          ? { ...connection, favorite: fav }
+          : connection
+      );
     },
   },
 });
 
-export const { addConnection, removeConnection, editConnection } =
-  connectionsSlice.actions;
+export const {
+  addConnection,
+  removeConnection,
+  editConnection,
+  favoriteConnection,
+} = connectionsSlice.actions;
 
 export default connectionsSlice.reducer;
