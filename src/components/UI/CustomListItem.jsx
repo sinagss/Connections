@@ -12,20 +12,19 @@ import { Mail, Phone, Star, StarRateOutlined } from "@mui/icons-material";
 import PropTypes from "prop-types";
 import { useDispatch } from "react-redux";
 import { favoriteConnection } from "../../store/connectionsSlice";
-import { useCallback } from "react";
 
 const CustomListItem = ({ object, index, connectionsLength }) => {
   const [fav, setFav] = useState(object.favorite || false);
 
   const dispatch = useDispatch();
 
-  const favClickHandler = useCallback(() => {
+  const favClickHandler = () => {
     setFav((prevFav) => {
       const newFav = !prevFav;
       dispatch(favoriteConnection({ object, index, fav: newFav }));
       return newFav;
     });
-  }, [object, index, dispatch]);
+  };
 
   return (
     <React.Fragment>
