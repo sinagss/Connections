@@ -1,14 +1,60 @@
-import { useState } from "react";
-import { Typography, List, Fab, Toolbar, Container, Box } from "@mui/material";
+import { useEffect, useState } from "react";
+import {
+  Typography,
+  List,
+  Fab,
+  Toolbar,
+  Container,
+  Box,
+  Select,
+  MenuItem,
+  FormControl,
+  InputLabel,
+} from "@mui/material";
 import { Add as AddIcon } from "@mui/icons-material";
 import NewConnection from "../components/NewConnection";
 import { useSelector } from "react-redux";
 import CustomListItem from "../components/UI/CustomListItem";
 
+function sortByFirstName(a, b) {
+  const nameA = a.firstName.toLowerCase();
+  const nameB = b.firstName.toLowerCase();
+
+  if (nameA < nameB) return -1;
+  if (nameA > nameB) return 1;
+  return 0;
+}
+function sortByFirstNameReverse(a, b) {
+  const nameA = a.firstName.toLowerCase();
+  const nameB = b.firstName.toLowerCase();
+
+  if (nameA > nameB) return -1;
+  if (nameA < nameB) return 1;
+  return 0;
+}
+
+function sortByFav(a, b) {
+  if (a.favorite && !b.favorite) {
+    return -1;
+  }
+  if (!a.favorite && b.favorite) {
+    return 1;
+  }
+  return sortByFirstName(a, b);
+}
+
 const Connections = () => {
+  const contacts = useSelector((state) => state.connections.connections);
+
+  const [connections, setConnections] = useState(
+    [...contacts].sort((a, b) => sortByFav(a, b))
+  );
+  const [sortType, setSortType] = useState("fav");
   const [isModalOpen, setIsModalOpen] = useState(false);
 
-  const contacts = useSelector((state) => state.connections.connections);
+  useEffect(() => {
+    setSortType("fav");
+  }, []);
 
   const handleModalOpen = () => {
     setIsModalOpen(true);
@@ -20,6 +66,30 @@ const Connections = () => {
 
   const handleAddContact = () => {
     setIsModalOpen(false);
+  };
+
+  const sortChangeHandler = (event) => {
+    const type = event.target.value;
+    setSortType(type);
+
+    let sortedConnections = [...connections];
+
+    switch (type) {
+      case "fav":
+        sortedConnections.sort((a, b) => sortByFav(a, b));
+        break;
+      case "az":
+        sortedConnections.sort((a, b) => sortByFirstName(a, b));
+        break;
+      case "za":
+        sortedConnections.sort((a, b) => sortByFirstNameReverse(a, b));
+        break;
+      default:
+        sortedConnections.sort((a, b) => sortByFav(a, b));
+        break;
+    }
+
+    setConnections(sortedConnections);
   };
 
   return (
@@ -37,10 +107,41 @@ const Connections = () => {
         marginX="auto"
         marginBottom="1.5rem"
       >
-        <Container margin="auto">
-          <Typography variant="h4" gutterBottom>
-            Connections
-          </Typography>
+        <Container
+          sx={{
+            display: "flex",
+            flexDirection: "column",
+          }}
+        >
+          <Container
+            sx={{
+              display: "flex",
+              flexDirection: "row",
+              justifyContent: "space-between",
+              alignItems: "center",
+            }}
+          >
+            <Typography
+              variant="h5"
+              gutterBottom
+              sx={{ flexShrink: "initial" }}
+            >
+              Connections
+            </Typography>
+            <FormControl sx={{ minWidth: 110 }} size="small">
+              <InputLabel>Sort</InputLabel>
+              <Select
+                value={sortType}
+                label="Sort"
+                sx={{ minWidth: "fit-content" }}
+                onChange={(e) => sortChangeHandler(e)}
+              >
+                <MenuItem value={"fav"}>⭐ First</MenuItem>
+                <MenuItem value={"az"}>A{"→"}Z</MenuItem>
+                <MenuItem value={"za"}>Z{"→"}A</MenuItem>
+              </Select>
+            </FormControl>
+          </Container>
           <List
             sx={{
               width: "100%",
@@ -48,12 +149,12 @@ const Connections = () => {
               bgcolor: "background.paper",
             }}
           >
-            {contacts.map((contact, index) => (
+            {connections.map((contact, index) => (
               <CustomListItem
-                key={index}
+                key={contact.id}
                 object={contact}
                 index={index}
-                connectionsLength={contacts.length}
+                connectionsLength={connections.length}
               />
             ))}
           </List>
