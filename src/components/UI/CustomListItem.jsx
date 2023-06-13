@@ -13,7 +13,12 @@ import PropTypes from "prop-types";
 import { useDispatch } from "react-redux";
 import { favoriteConnection } from "../../store/connectionsSlice";
 
-const CustomListItem = ({ object, index, connectionsLength }) => {
+const CustomListItem = ({
+  object,
+  index,
+  connectionsLength,
+  toggleFavorite,
+}) => {
   const [fav, setFav] = useState(object.favorite || false);
 
   const dispatch = useDispatch();
@@ -24,6 +29,7 @@ const CustomListItem = ({ object, index, connectionsLength }) => {
       dispatch(favoriteConnection({ object, index, fav: newFav }));
       return newFav;
     });
+    toggleFavorite(object);
   };
 
   return (
@@ -119,6 +125,7 @@ CustomListItem.propTypes = {
   }).isRequired,
   index: PropTypes.number.isRequired,
   connectionsLength: PropTypes.number.isRequired,
+  toggleFavorite: PropTypes.func.isRequired,
 };
 
 export default CustomListItem;

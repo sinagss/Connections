@@ -16,6 +16,27 @@ import NewConnection from "../components/NewConnection";
 import { useSelector } from "react-redux";
 import CustomListItem from "../components/UI/CustomListItem";
 
+function sortByType(type, connections) {
+  let sortedConnections = [...connections];
+
+  switch (type) {
+    case "fav":
+      sortedConnections.sort((a, b) => sortByFav(a, b));
+      break;
+    case "az":
+      sortedConnections.sort((a, b) => sortByFirstName(a, b));
+      break;
+    case "za":
+      sortedConnections.sort((a, b) => sortByFirstNameReverse(a, b));
+      break;
+    default:
+      sortedConnections.sort((a, b) => sortByFav(a, b));
+      break;
+  }
+
+  return sortedConnections;
+}
+
 function sortByFirstName(a, b) {
   const nameA = a.firstName.toLowerCase();
   const nameB = b.firstName.toLowerCase();
@@ -56,6 +77,10 @@ const Connections = () => {
     setSortType("fav");
   }, []);
 
+  useEffect(() => {
+    // TODO:
+  }, [connections]);
+
   const handleModalOpen = () => {
     setIsModalOpen(true);
   };
@@ -72,24 +97,18 @@ const Connections = () => {
     const type = event.target.value;
     setSortType(type);
 
-    let sortedConnections = [...connections];
-
-    switch (type) {
-      case "fav":
-        sortedConnections.sort((a, b) => sortByFav(a, b));
-        break;
-      case "az":
-        sortedConnections.sort((a, b) => sortByFirstName(a, b));
-        break;
-      case "za":
-        sortedConnections.sort((a, b) => sortByFirstNameReverse(a, b));
-        break;
-      default:
-        sortedConnections.sort((a, b) => sortByFav(a, b));
-        break;
-    }
+    const sortedConnections = sortByType(type, [...connections]);
 
     setConnections(sortedConnections);
+  };
+
+  const toggleFavorite = (object) => {
+    const updatedConnections = connections.map((connection) =>
+      connection.id === object.id
+        ? { ...connection, favorite: !connection.favorite }
+        : connection
+    );
+    setConnections(updatedConnections);
   };
 
   return (
@@ -155,6 +174,7 @@ const Connections = () => {
                 object={contact}
                 index={index}
                 connectionsLength={connections.length}
+                toggleFavorite={toggleFavorite}
               />
             ))}
           </List>
