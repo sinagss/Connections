@@ -21,11 +21,13 @@ const connectionsSlice = createSlice({
     editConnection: (state, action) => {},
     favoriteConnection: (state, action) => {
       const { object, fav } = action.payload;
-      state.connections = state.connections.map((connection) =>
+      const updatedConnections = state.connections.map((connection) =>
         connection.id === object.id
           ? { ...connection, favorite: fav }
           : connection
       );
+
+      return { ...state, connections: updatedConnections };
     },
   },
 });
