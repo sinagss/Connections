@@ -4,6 +4,7 @@ import connectionsSlice from "./connectionsSlice";
 import { persistStore, persistReducer } from "redux-persist";
 import thunk from "redux-thunk";
 import storage from "redux-persist/lib/storage";
+import localeSlice from "./localSlice";
 
 const authPersistConfig = {
   key: "auth",
@@ -15,15 +16,22 @@ const connectionsPersistConfig = {
   storage,
 };
 
+const localePersistConfig = {
+  key: "locale",
+  storage,
+};
+
 const persistedAuthReducer = persistReducer(authPersistConfig, authSlice);
 const persistedConnectionsReducer = persistReducer(
   connectionsPersistConfig,
   connectionsSlice
 );
+const persistedLocaleReducer = persistReducer(localePersistConfig, localeSlice);
 
 const rootReducer = {
   authenticator: persistedAuthReducer,
   connections: persistedConnectionsReducer,
+  locale: persistedLocaleReducer,
 };
 
 const store = configureStore({
