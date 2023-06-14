@@ -18,6 +18,7 @@ const CustomListItem = ({
   index,
   connectionsLength,
   toggleFavorite,
+  clickHandler,
 }) => {
   const [fav, setFav] = useState(object.favorite || false);
 
@@ -38,6 +39,7 @@ const CustomListItem = ({
         alignItems="flex-start"
         disablePadding
         disableGutters
+        onClick={clickHandler}
         sx={{
           cursor: "pointer",
           display: "grid",
@@ -72,6 +74,7 @@ const CustomListItem = ({
         <ListItemAvatar>
           <Avatar />
         </ListItemAvatar>
+
         <ListItemText
           sx={{ paddingRight: 14 }}
           primary={`${object.firstName} ${object.lastName}`}
@@ -109,7 +112,11 @@ const CustomListItem = ({
         />
       </ListItem>
       {index < connectionsLength - 1 && (
-        <Divider variant="inset" component="li" />
+        <Divider
+          variant="inset"
+          component="li"
+          sx={{ width: "100%", justifyContent: "left" }}
+        />
       )}
     </React.Fragment>
   );
@@ -126,6 +133,7 @@ CustomListItem.propTypes = {
   index: PropTypes.number.isRequired,
   connectionsLength: PropTypes.number.isRequired,
   toggleFavorite: PropTypes.func.isRequired,
+  clickHandler: PropTypes.func.isRequired,
 };
 
 export default CustomListItem;
