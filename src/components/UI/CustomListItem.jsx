@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import { useState } from "react";
 import {
   Typography,
   ListItem,
@@ -7,6 +7,7 @@ import {
   IconButton,
   ListItemAvatar,
   Avatar,
+  ListItemButton,
 } from "@mui/material";
 import { Mail, Phone, Star, StarRateOutlined } from "@mui/icons-material";
 import PropTypes from "prop-types";
@@ -34,19 +35,14 @@ const CustomListItem = ({
   };
 
   return (
-    <React.Fragment>
+    <>
       <ListItem
         alignItems="flex-start"
         disablePadding
         disableGutters
-        onClick={clickHandler}
         sx={{
           cursor: "pointer",
-          display: "grid",
-          gridTemplateColumns: {
-            xs: "1fr 2fr 1fr 1fr 1fr",
-            sm: "1fr 2fr 2fr 2fr 1fr 1fr",
-          },
+
           "&:hover": { backgroundColor: "action.hover" },
         }}
         secondaryAction={
@@ -71,45 +67,56 @@ const CustomListItem = ({
           </>
         }
       >
-        <ListItemAvatar>
-          <Avatar />
-        </ListItemAvatar>
-
-        <ListItemText
-          sx={{ paddingRight: 14 }}
-          primary={`${object.firstName} ${object.lastName}`}
-        />
-        <ListItemText
-          sx={{ display: { xs: "none", sm: "block" } }}
-          primary="Phone:"
-          secondary={
-            <>
-              <Typography
-                sx={{ display: "flex", alignItems: "flex-end" }}
-                component="span"
-                variant="body2"
-                color="textPrimary"
-              ></Typography>
-              {object.phoneNumbers[0]}
-            </>
-          }
-        />
-        <ListItemText
-          sx={{ display: { xs: "none", sm: "block" } }}
-          primary="Email:"
-          component="span"
-          secondary={
-            <>
-              <Typography
-                display="inline"
-                component="span"
-                variant="body2"
-                color="textPrimary"
-              ></Typography>
-              {object.emails[0]}
-            </>
-          }
-        />
+        <ListItemButton
+          sx={{
+            display: "grid",
+            gridTemplateColumns: {
+              xs: "1fr 11fr",
+              sm: "1fr 3fr 3fr 9fr",
+              md: "1fr 6fr 4fr 8fr",
+            },
+          }}
+          onClick={clickHandler}
+        >
+          <ListItemAvatar>
+            <Avatar />
+          </ListItemAvatar>
+          <ListItemText
+            sx={{ paddingRight: 14 }}
+            primary={`${object.firstName} ${object.lastName}`}
+          />
+          <ListItemText
+            sx={{ display: { xs: "none", sm: "block" } }}
+            primary="Phone:"
+            secondary={
+              <>
+                <Typography
+                  sx={{ display: "flex", alignItems: "flex-end" }}
+                  component="span"
+                  variant="body2"
+                  color="textPrimary"
+                ></Typography>
+                {object.phoneNumbers[0]}
+              </>
+            }
+          />
+          <ListItemText
+            sx={{ display: { xs: "none", sm: "block" } }}
+            primary="Email:"
+            component="span"
+            secondary={
+              <>
+                <Typography
+                  display="inline"
+                  component="span"
+                  variant="body2"
+                  color="textPrimary"
+                ></Typography>
+                {object.emails[0]}
+              </>
+            }
+          />
+        </ListItemButton>
       </ListItem>
       {index < connectionsLength - 1 && (
         <Divider
@@ -118,7 +125,7 @@ const CustomListItem = ({
           sx={{ width: "100%", justifyContent: "left" }}
         />
       )}
-    </React.Fragment>
+    </>
   );
 };
 
