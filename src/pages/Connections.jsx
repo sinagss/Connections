@@ -5,7 +5,6 @@ import {
   Fab,
   Toolbar,
   Container,
-  Box,
   Select,
   MenuItem,
   FormControl,
@@ -15,6 +14,7 @@ import { Add as AddIcon } from "@mui/icons-material";
 import NewConnection from "../components/NewConnection";
 import { useSelector } from "react-redux";
 import CustomListItem from "../components/UI/CustomListItem";
+import useStrings from "../hooks/useStrings";
 
 function sortByType(type, connections) {
   let sortedConnections = [...connections];
@@ -66,12 +66,14 @@ function sortByFav(a, b) {
 
 const Connections = () => {
   const contacts = useSelector((state) => state.connections.connections);
+  const strings = useStrings().connections;
 
   const [connections, setConnections] = useState(
     [...contacts].sort((a, b) => sortByFav(a, b))
   );
   const [sortType, setSortType] = useState("fav");
   const [isModalOpen, setIsModalOpen] = useState(false);
+  const [editConnection, setEditConnection] = useState(null);
 
   useEffect(() => {
     setSortType("fav");
@@ -79,9 +81,12 @@ const Connections = () => {
 
   useEffect(() => {
     // TODO:
-  }, [connections]);
+    const sortedConnections = sortByType(sortType, [...contacts]);
+    setConnections(sortedConnections);
+  }, [contacts, sortType]);
 
   const handleModalOpen = () => {
+    setEditConnection(null);
     setIsModalOpen(true);
   };
 
@@ -111,20 +116,27 @@ const Connections = () => {
     setConnections(updatedConnections);
   };
 
+  const connectionClickHandler = (connection) => {
+    setEditConnection(connection);
+    setIsModalOpen(true);
+  };
+
   return (
     <>
       <Toolbar />
-      <Box
-        display="flex"
-        flexDirection={{ xs: "column", sm: "column" }}
-        alignItems={{ xs: "center", sm: "center" }}
-        justifyContent="center"
-        minHeight="100vh"
-        p={4}
-        textAlign="center"
-        overflow="hidden"
-        marginX="auto"
-        marginBottom="1.5rem"
+      <Container
+        sx={{
+          display: "flex",
+          flexDirection: "column",
+          alignItems: "center",
+          justifyContent: "center",
+          minHeight: "100vh",
+          p: 4,
+          textAlign: "center",
+          overflow: "hidden",
+          mx: "auto",
+          marginBottom: "1.5rem",
+        }}
       >
         <Container
           sx={{
@@ -132,66 +144,55 @@ const Connections = () => {
             flexDirection: "column",
           }}
         >
-          <Container
-            sx={{
-              display: "flex",
-              flexDirection: "row",
-              justifyContent: "space-between",
-              alignItems: "center",
-            }}
-          >
-            <Typography
-              variant="h5"
-              gutterBottom
-              sx={{ flexShrink: "initial" }}
+          <Typography variant="h5" gutterBottom sx={{ flexShrink: "initial" }}>
+            {strings.pageName}
+          </Typography>
+          <FormControl sx={{ minWidth: 110 }} size="small">
+            <InputLabel>{strings.sort.label}</InputLabel>
+            <Select
+              value={sortType}
+              label={strings.sort.label}
+              sx={{ minWidth: "fit-content" }}
+              onChange={(e) => sortChangeHandler(e)}
             >
-              Connections
-            </Typography>
-            <FormControl sx={{ minWidth: 110 }} size="small">
-              <InputLabel>Sort</InputLabel>
-              <Select
-                value={sortType}
-                label="Sort"
-                sx={{ minWidth: "fit-content" }}
-                onChange={(e) => sortChangeHandler(e)}
-              >
-                <MenuItem value={"fav"}>⭐ First</MenuItem>
-                <MenuItem value={"az"}>A{"→"}Z</MenuItem>
-                <MenuItem value={"za"}>Z{"→"}A</MenuItem>
-              </Select>
-            </FormControl>
-          </Container>
-          <List
-            sx={{
-              width: "100%",
-              maxWidth: "auto",
-              bgcolor: "background.paper",
-            }}
-          >
-            {connections.map((contact, index) => (
-              <CustomListItem
-                key={contact.id}
-                object={contact}
-                index={index}
-                connectionsLength={connections.length}
-                toggleFavorite={toggleFavorite}
-              />
-            ))}
-          </List>
-          <Fab
-            color="primary"
-            onClick={handleModalOpen}
-            sx={{ position: "fixed", bottom: 16, right: 16 }}
-          >
-            <AddIcon />
-          </Fab>
-          <NewConnection
-            open={isModalOpen}
-            onClose={handleModalClose}
-            onAddContact={handleAddContact}
-          />
+              <MenuItem value={"fav"}>{strings.sort.fav}</MenuItem>
+              <MenuItem value={"az"}>{strings.sort.az}</MenuItem>
+              <MenuItem value={"za"}>{strings.sort.za}</MenuItem>
+            </Select>
+          </FormControl>
         </Container>
-      </Box>
+        <List
+          sx={{
+            width: "100%",
+            maxWidth: "auto",
+            bgcolor: "background.paper",
+          }}
+        >
+          {connections.map((contact, index) => (
+            <CustomListItem
+              key={contact.id}
+              object={contact}
+              index={index}
+              connectionsLength={connections.length}
+              toggleFavorite={toggleFavorite}
+              clickHandler={() => connectionClickHandler(contact)}
+            />
+          ))}
+        </List>
+        <Fab
+          color="primary"
+          onClick={handleModalOpen}
+          sx={{ position: "fixed", bottom: 16, right: 16 }}
+        >
+          <AddIcon />
+        </Fab>
+        <NewConnection
+          open={isModalOpen}
+          onClose={handleModalClose}
+          onAddContact={handleAddContact}
+          connectionToEdit={editConnection}
+        />
+      </Container>
     </>
   );
 };
