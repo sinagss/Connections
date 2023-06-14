@@ -16,10 +16,14 @@ import {
 import { AddBox, Delete } from "@mui/icons-material";
 import { isValidEmail, isValidPhoneNumber } from "../utils/validationUtils";
 import { useDispatch } from "react-redux";
-import { addConnection } from "../store/connectionsSlice";
+import { addConnection, updateConnection } from "../store/connectionsSlice";
+import useStrings from "../hooks/useStrings";
 
-const ModalPage = ({ open, onClose }) => {
+const ModalPage = ({ open, onClose, connectionToEdit }) => {
+  const strings = useStrings().newConnections;
+
   const [isValidForm, setIsValidForm] = useState(false);
+  const [id, setId] = useState("");
   const [firstName, setFirstName] = useState("");
   const [lastName, setLastName] = useState("");
   const [age, setAge] = useState("");
@@ -29,6 +33,19 @@ const ModalPage = ({ open, onClose }) => {
   const [address, setAddress] = useState("");
 
   const dispatch = useDispatch();
+
+  useEffect(() => {
+    if (connectionToEdit) {
+      setId(connectionToEdit.id);
+      setFirstName(connectionToEdit.firstName);
+      setLastName(connectionToEdit.lastName);
+      setAge(connectionToEdit.age);
+      setSex(connectionToEdit.sex);
+      setPhoneNumbers(connectionToEdit.phoneNumbers);
+      setEmails(connectionToEdit.emails);
+      setAddress(connectionToEdit.address);
+    }
+  }, [connectionToEdit]);
 
   const handleAddPhoneNumber = () => {
     setPhoneNumbers([...phoneNumbers, ""]);
@@ -64,6 +81,7 @@ const ModalPage = ({ open, onClose }) => {
 
   const handleSubmit = () => {
     const contactInfo = {
+      id,
       firstName,
       lastName,
       age,
@@ -72,7 +90,11 @@ const ModalPage = ({ open, onClose }) => {
       emails,
       address,
     };
-    dispatch(addConnection(contactInfo));
+    if (connectionToEdit) {
+      dispatch(updateConnection({ id: contactInfo.id, contactInfo }));
+    } else {
+      dispatch(addConnection(contactInfo));
+    }
     onClose();
   };
 
@@ -139,7 +161,7 @@ const ModalPage = ({ open, onClose }) => {
           </Select>
         </FormControl>
         <Box mt={3}>
-          <Typography variant="subtitle1">Phone Numbers</Typography>
+          <Typography variant="subtitle1">{strings.phoneNumbers}</Typography>
           {phoneNumbers.map((phoneNumber, index) => (
             <Grid
               container
@@ -235,7 +257,9 @@ const ModalPage = ({ open, onClose }) => {
             onClick={handleSubmit}
             disabled={!isValidForm}
           >
-            Add to Contacts
+            {connectionToEdit
+              ? strings.updateConnection
+              : strings.addNewConnection}
           </Button>
         </Box>
       </Box>
@@ -246,6 +270,7 @@ const ModalPage = ({ open, onClose }) => {
 ModalPage.propTypes = {
   open: PropTypes.bool.isRequired,
   onClose: PropTypes.func.isRequired,
+  connectionToEdit: PropTypes.object,
 };
 
 export default ModalPage;
