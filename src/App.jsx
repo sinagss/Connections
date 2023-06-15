@@ -9,6 +9,7 @@ import { Provider } from "react-redux";
 import { store } from "./store/store";
 import Connections from "./pages/Connections";
 import SignUp from "./pages/SignUp";
+import Settings from "./pages/Settings";
 
 function App() {
   const router = createBrowserRouter([
@@ -40,6 +41,11 @@ function App() {
         {
           path: "connections",
           element: <Connections />,
+          errorElement: <Error />,
+        },
+        {
+          path: "settings",
+          element: <Settings />,
           errorElement: <Error />,
         },
         {
