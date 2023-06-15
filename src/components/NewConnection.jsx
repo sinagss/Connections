@@ -21,6 +21,9 @@ import useStrings from "../hooks/useStrings";
 
 const ModalPage = ({ open, onClose, connectionToEdit }) => {
   const strings = useStrings().newConnections;
+  const emailStrings = strings.emails;
+  const phoneStrings = strings.phoneNumbers;
+  const sexStrings = strings.sex;
 
   const [isValidForm, setIsValidForm] = useState(false);
   const [id, setId] = useState("");
@@ -95,6 +98,28 @@ const ModalPage = ({ open, onClose, connectionToEdit }) => {
     } else {
       dispatch(addConnection(contactInfo));
     }
+    setId("");
+    setFirstName("");
+    setLastName("");
+    setAge("");
+    setSex("");
+    setPhoneNumbers([]);
+    setEmails([]);
+    setAddress("");
+
+    onClose();
+  };
+
+  const modalCloseHandler = () => {
+    setId("");
+    setFirstName("");
+    setLastName("");
+    setAge("");
+    setSex("");
+    setPhoneNumbers([""]);
+    setEmails([""]);
+    setAddress("");
+
     onClose();
   };
 
@@ -105,7 +130,7 @@ const ModalPage = ({ open, onClose, connectionToEdit }) => {
   }, [firstName, lastName, age, sex, emails]);
 
   return (
-    <Modal open={open} onClose={onClose}>
+    <Modal open={open} onClose={modalCloseHandler}>
       <Box
         sx={{
           position: "absolute",
@@ -122,10 +147,10 @@ const ModalPage = ({ open, onClose, connectionToEdit }) => {
         }}
       >
         <Typography variant="h6" component="h2" gutterBottom>
-          Contact Information
+          {strings.titleLabel}
         </Typography>
         <TextField
-          label="First Name"
+          label={strings.firstNameLabel}
           value={firstName}
           onChange={(e) => setFirstName(e.target.value)}
           fullWidth
@@ -133,7 +158,7 @@ const ModalPage = ({ open, onClose, connectionToEdit }) => {
           required
         />
         <TextField
-          label="Last Name"
+          label={strings.lastNameLabel}
           value={lastName}
           onChange={(e) => setLastName(e.target.value)}
           fullWidth
@@ -141,7 +166,7 @@ const ModalPage = ({ open, onClose, connectionToEdit }) => {
           required
         />
         <TextField
-          label="Age"
+          label={strings.ageLabel}
           type="number"
           value={age}
           onChange={(e) => setAge(e.target.value)}
@@ -150,18 +175,20 @@ const ModalPage = ({ open, onClose, connectionToEdit }) => {
           required
         />
         <FormControl fullWidth required>
-          <InputLabel>Sex</InputLabel>
+          <InputLabel>{sexStrings.label}</InputLabel>
           <Select
             value={sex}
             onChange={(e) => setSex(e.target.value)}
-            label="Sex"
+            label={sexStrings.label}
           >
-            <MenuItem value="male">Male</MenuItem>
-            <MenuItem value="female">Female</MenuItem>
+            <MenuItem value="male">{sexStrings.male}</MenuItem>
+            <MenuItem value="female">{sexStrings.female}</MenuItem>
           </Select>
         </FormControl>
         <Box mt={3}>
-          <Typography variant="subtitle1">{strings.phoneNumbers}</Typography>
+          <Typography variant="subtitle1">
+            {phoneStrings.phoneSectionLabel}
+          </Typography>
           {phoneNumbers.map((phoneNumber, index) => (
             <Grid
               container
@@ -171,7 +198,8 @@ const ModalPage = ({ open, onClose, connectionToEdit }) => {
             >
               <Grid item xs={9}>
                 <TextField
-                  label="Phone Number"
+                  label={phoneStrings.phoneLabel}
+                  autoComplete={`phoneNumber${index}`}
                   value={phoneNumber}
                   onChange={(e) =>
                     handlePhoneNumberChange(index, e.target.value)
@@ -180,7 +208,8 @@ const ModalPage = ({ open, onClose, connectionToEdit }) => {
                   margin="normal"
                   error={!isValidPhoneNumber(phoneNumber)}
                   helperText={
-                    !isValidPhoneNumber(phoneNumber) && "Invalid phone number"
+                    !isValidPhoneNumber(phoneNumber) &&
+                    phoneStrings.invalidPhone
                   }
                 />
               </Grid>
@@ -188,7 +217,7 @@ const ModalPage = ({ open, onClose, connectionToEdit }) => {
                 {index === phoneNumbers.length - 1 && (
                   <IconButton
                     onClick={handleAddPhoneNumber}
-                    aria-label="Add Phone Number"
+                    aria-label={phoneStrings.addPhoneNumberLabel}
                   >
                     <AddBox />
                   </IconButton>
@@ -196,7 +225,7 @@ const ModalPage = ({ open, onClose, connectionToEdit }) => {
                 {index !== phoneNumbers.length - 1 && (
                   <IconButton
                     onClick={() => handleDeletePhoneNumber(index)}
-                    aria-label="Delete Phone Number"
+                    aria-label={phoneStrings.deletePhoneNumberLabel}
                   >
                     <Delete />
                   </IconButton>
@@ -206,7 +235,9 @@ const ModalPage = ({ open, onClose, connectionToEdit }) => {
           ))}
         </Box>
         <Box mt={3}>
-          <Typography variant="subtitle1">Emails</Typography>
+          <Typography variant="subtitle1">
+            {emailStrings.emailsSectionLabel}
+          </Typography>
           {emails.map((email, index) => (
             <Grid
               container
@@ -216,8 +247,11 @@ const ModalPage = ({ open, onClose, connectionToEdit }) => {
             >
               <Grid item xs={9}>
                 <TextField
-                  label="Email"
+                  label={emailStrings.emailLabel}
                   value={email}
+                  key={`new-email-${index}`}
+                  type="email"
+                  autoComplete={`email-${index}`}
                   onChange={(e) => handleEmailChange(index, e.target.value)}
                   fullWidth
                   margin="normal"
@@ -227,14 +261,17 @@ const ModalPage = ({ open, onClose, connectionToEdit }) => {
               </Grid>
               <Grid item xs={3}>
                 {index === emails.length - 1 && (
-                  <IconButton onClick={handleAddEmail} aria-label="Add Email">
+                  <IconButton
+                    onClick={handleAddEmail}
+                    aria-label={emailStrings.addEmailLabel}
+                  >
                     <AddBox />
                   </IconButton>
                 )}
                 {index !== emails.length - 1 && (
                   <IconButton
                     onClick={() => handleDeleteEmail(index)}
-                    aria-label="Delete Email"
+                    aria-label={emailStrings.deleteEmailLabel}
                   >
                     <Delete />
                   </IconButton>
@@ -244,7 +281,7 @@ const ModalPage = ({ open, onClose, connectionToEdit }) => {
           ))}
         </Box>
         <TextField
-          label="Address"
+          label={strings.addressLabel}
           value={address}
           onChange={(e) => setAddress(e.target.value)}
           fullWidth
