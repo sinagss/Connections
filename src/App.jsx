@@ -1,15 +1,16 @@
+import { createTheme, ThemeProvider } from "@mui/material";
+import { useSelector } from "react-redux";
 import { createBrowserRouter, Outlet, RouterProvider } from "react-router-dom";
 import "./App.css";
-import Home from "./pages/Home";
-import Error from "./pages/ErrorPage";
-import LogIn from "./pages/LogIn";
 import AppBar from "./components/AppBar";
 import AboutPage from "./pages/About";
-import { Provider } from "react-redux";
-import { store } from "./store/store";
 import Connections from "./pages/Connections";
-import SignUp from "./pages/SignUp";
+import Error from "./pages/ErrorPage";
+import Home from "./pages/Home";
+import LogIn from "./pages/LogIn";
 import Settings from "./pages/Settings";
+import SignUp from "./pages/SignUp";
+import RTLProvider from "./providers/RTLProvider";
 
 function App() {
   const router = createBrowserRouter([
@@ -57,10 +58,15 @@ function App() {
     },
   ]);
 
+  const direction = useSelector((state) => state.locale.direction);
+  const theme = createTheme({ direction });
+
   return (
-    <Provider store={store}>
-      <RouterProvider router={router}></RouterProvider>
-    </Provider>
+    <RTLProvider direction={direction}>
+      <ThemeProvider theme={theme}>
+        <RouterProvider router={router}></RouterProvider>
+      </ThemeProvider>
+    </RTLProvider>
   );
 }
 

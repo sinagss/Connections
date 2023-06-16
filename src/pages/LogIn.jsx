@@ -15,6 +15,7 @@ import { logIn } from "../store/authSlice";
 import { useNavigate } from "react-router-dom";
 import { useState } from "react";
 import { Link as RouterLink } from "react-router-dom";
+import useStrings from "../hooks/useStrings";
 
 function Copyright(props) {
   const mySiteUrl = import.meta.env.VITE_MY_WEBSITE_URL;
@@ -49,6 +50,8 @@ export default function LogIn() {
   const nav = useNavigate();
   const systemUsers = useSelector((state) => state.authenticator.systemUsers);
 
+  const strings = useStrings().login;
+
   const handleSubmit = (event) => {
     event.preventDefault();
     const data = new FormData(event.currentTarget);
@@ -79,17 +82,17 @@ export default function LogIn() {
           <LockOutlinedIcon />
         </Avatar>
         <Typography component="h1" variant="h5">
-          Sign in
+          {strings.signinLabel}
         </Typography>
         <Box component="form" onSubmit={handleSubmit} noValidate sx={{ mt: 1 }}>
           <TextField
             error={loginError}
-            helperText={loginError ? "Username or password is incorrect" : ""}
+            helperText={loginError ? strings.loginError : ""}
             margin="normal"
             required
             fullWidth
             id="email"
-            label="Email Address"
+            label={strings.emailLabel}
             name="email"
             autoComplete="email"
             autoFocus
@@ -99,14 +102,14 @@ export default function LogIn() {
             required
             fullWidth
             name="password"
-            label="Password"
+            label={strings.passwordLabel}
             type="password"
             id="password"
             autoComplete="current-password"
           />
           <FormControlLabel
             control={<Checkbox value="remember" color="primary" />}
-            label="Remember me"
+            label={strings.signinLabel}
           />
           <Button
             type="submit"
@@ -114,17 +117,17 @@ export default function LogIn() {
             variant="contained"
             sx={{ mt: 3, mb: 2 }}
           >
-            Sign In
+            {strings.signinLabel}
           </Button>
           <Grid container>
             <Grid item xs>
               <RouterLink to="/reset-pass">
-                <Link variant="body2">Forgot password?</Link>
+                <Link variant="body2">{strings.forgotPasswordLabel}</Link>
               </RouterLink>
             </Grid>
             <Grid item>
               <RouterLink to="/signup">
-                <Link variant="body2">{"Don't have an account? Sign Up"}</Link>
+                <Link variant="body2">{strings.noAccountLabel}</Link>
               </RouterLink>
             </Grid>
           </Grid>

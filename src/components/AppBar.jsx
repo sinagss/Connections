@@ -1,6 +1,4 @@
-import { useState } from "react";
-import { Link, NavLink } from "react-router-dom";
-import PropTypes from "prop-types";
+import MenuIcon from "@mui/icons-material/Menu";
 import {
   AppBar,
   Box,
@@ -13,28 +11,30 @@ import {
   Toolbar,
   Typography,
 } from "@mui/material";
-import MenuIcon from "@mui/icons-material/Menu";
-import ListItemLink from "../components/UI/ListItemLink";
-import AvatarMenu from "../components/UI/AvatarMenu";
+import PropTypes from "prop-types";
+import { useState } from "react";
 import { useSelector } from "react-redux";
+import { Link, NavLink } from "react-router-dom";
 import logo from "../assets/user.png";
-
-import LoginButton from "./UI/LoginButton";
-
-const navItems = [
-  { text: "Home", href: "/" },
-  { text: "Connections", href: "connections" },
-  { text: "About", href: "about" },
-];
+import AvatarMenu from "../components/UI/AvatarMenu";
+import ListItemLink from "../components/UI/ListItemLink";
+import useStrings from "../hooks/useStrings";
 
 const drawerWidth = 240;
-const appName = import.meta.env.VITE_APP_NAME;
 
 const DrawerAppBar = (props) => {
   const { window } = props;
   const [mobileOpen, setMobileOpen] = useState(false);
 
   const isLoggedIn = useSelector((state) => state.authenticator.isLoggedIn);
+
+  const strings = useStrings().appBar;
+
+  const navItems = [
+    { text: strings.homeLabel, href: "/" },
+    { text: strings.connectionsLabel, href: "connections" },
+    { text: strings.aboutLabel, href: "about" },
+  ];
 
   const handleDrawerToggle = () => {
     setMobileOpen((prevState) => !prevState);
@@ -43,7 +43,7 @@ const DrawerAppBar = (props) => {
   const drawer = (
     <Box onClick={handleDrawerToggle} sx={{ textAlign: "center" }}>
       <Typography variant="h6" sx={{ my: 2 }}>
-        {appName}
+        {strings.appName}
       </Typography>
       <Divider />
       <List>
@@ -93,7 +93,7 @@ const DrawerAppBar = (props) => {
             component="div"
             sx={{ flexGrow: 1, display: { xs: "none", sm: "block" } }}
           >
-            {appName}
+            {strings.appName}
           </Typography>
           <Box sx={{ display: { xs: "none", sm: "block" } }}>
             {navItems.map((item) => (
@@ -106,7 +106,7 @@ const DrawerAppBar = (props) => {
               </NavLink>
             ))}
           </Box>
-          {isLoggedIn ? <AvatarMenu /> : <LoginButton />}
+          {isLoggedIn ? <AvatarMenu /> : ""}
         </Toolbar>
       </AppBar>
       <Box component="nav">

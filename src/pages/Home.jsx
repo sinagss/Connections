@@ -1,7 +1,10 @@
-import { Box, Typography } from "@mui/material";
+import { Box, Container, Typography } from "@mui/material";
 import GetStartedButton from "../components/UI/GetStartedButton";
+import useStrings from "../hooks/useStrings";
+import LanguageSelect from "../components/UI/LanguageSelect";
 
 const HomePage = () => {
+  const strings = useStrings().home;
   return (
     <Box
       display="flex"
@@ -15,16 +18,18 @@ const HomePage = () => {
     >
       <Box display="flex" flexWrap="wrap">
         <Typography variant="h2" mb={4} className="animate-bounce">
-          Contact Information Storage App
+          {strings.title}
         </Typography>
       </Box>
       <Box maxWidth="300px">
         <Typography variant="body1" mb={4} className="animate-slideIn">
-          Welcome to our modern contact information storage app! Manage all your
-          contacts easily with advanced features.
+          {strings.subtitle}
         </Typography>
       </Box>
       <GetStartedButton />
+      <Container sx={{ position: "fixed", bottom: 40 }}>
+        <LanguageSelect />
+      </Container>
     </Box>
   );
 };

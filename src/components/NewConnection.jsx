@@ -12,6 +12,7 @@ import {
   InputLabel,
   Grid,
   IconButton,
+  useTheme,
 } from "@mui/material";
 import { AddBox, Delete } from "@mui/icons-material";
 import { isValidEmail, isValidPhoneNumber } from "../utils/validationUtils";
@@ -36,6 +37,12 @@ const ModalPage = ({ open, onClose, connectionToEdit }) => {
   const [address, setAddress] = useState("");
 
   const dispatch = useDispatch();
+
+  const theme = useTheme();
+  const textAlignment = theme.direction === "rtl" ? "right" : "left";
+  const styles = {
+    textAlign: textAlignment,
+  };
 
   useEffect(() => {
     if (connectionToEdit) {
@@ -150,6 +157,7 @@ const ModalPage = ({ open, onClose, connectionToEdit }) => {
           {strings.titleLabel}
         </Typography>
         <TextField
+          sx={{ ...styles, textAlign: "right" }}
           label={strings.firstNameLabel}
           value={firstName}
           onChange={(e) => setFirstName(e.target.value)}

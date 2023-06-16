@@ -13,6 +13,7 @@ import { Mail, Phone, Star, StarRateOutlined } from "@mui/icons-material";
 import PropTypes from "prop-types";
 import { useDispatch } from "react-redux";
 import { favoriteConnection } from "../../store/connectionsSlice";
+import useStrings from "../../hooks/useStrings";
 
 const CustomListItem = ({
   object,
@@ -24,6 +25,8 @@ const CustomListItem = ({
   const [fav, setFav] = useState(object.favorite || false);
 
   const dispatch = useDispatch();
+
+  const strings = useStrings().connections;
 
   const favClickHandler = () => {
     setFav((prevFav) => {
@@ -87,7 +90,7 @@ const CustomListItem = ({
           />
           <ListItemText
             sx={{ display: { xs: "none", sm: "block" } }}
-            primary="Phone:"
+            primary={strings.phone}
             secondary={
               <>
                 <Typography
@@ -102,7 +105,7 @@ const CustomListItem = ({
           />
           <ListItemText
             sx={{ display: { xs: "none", sm: "block" } }}
-            primary="Email:"
+            primary={strings.email}
             component="span"
             secondary={
               <>

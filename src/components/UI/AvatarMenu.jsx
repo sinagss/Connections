@@ -12,10 +12,13 @@ import { NavLink, useNavigate } from "react-router-dom";
 import { useDispatch } from "react-redux";
 import { logOut } from "../../store/authSlice";
 import { Logout } from "@mui/icons-material";
+import useStrings from "../../hooks/useStrings";
 
 const AvatarMenu = () => {
   const dispatch = useDispatch();
   const nav = useNavigate();
+
+  const strings = useStrings().avatarMenu;
 
   const [anchorElUser, setAnchorElUser] = useState(null);
 
@@ -33,12 +36,12 @@ const AvatarMenu = () => {
   };
 
   const settingItems = [
-    { text: "Account", href: "/account" },
-    { text: "Settings", href: "/settings" },
+    // { text: "Account", href: "/account" },
+    { text: strings.settingsLabel, href: "/settings" },
   ];
 
   return (
-    <Box sx={{ flexGrow: 0 }}>
+    <Box sx={{ flexGrow: 0, marginX:"1rem" }}>
       <Tooltip title="Open settings">
         <IconButton onClick={handleOpenUserMenu} sx={{ p: 0 }}>
           <Avatar alt="Remy Sharp" />
@@ -70,7 +73,7 @@ const AvatarMenu = () => {
         <Box onClick={logoutClickHandler}>
           <MenuItem onClick={handleCloseUserMenu}>
             <Logout sx={{ marginRight: "3px" }} />
-            <Typography textAlign="center">Logout</Typography>
+            <Typography textAlign="center">{strings.logoutLabel}</Typography>
           </MenuItem>
         </Box>
       </Menu>

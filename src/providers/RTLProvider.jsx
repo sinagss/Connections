@@ -4,16 +4,17 @@ import { CacheProvider } from "@emotion/react";
 import createCache from "@emotion/cache";
 import { prefixer } from "stylis";
 
-const cacheRtl = createCache({
-  key: "muirtl",
-  stylisPlugins: [prefixer, rtlPlugin],
-});
+function RTLProvider({ direction, children }) {
+  const cache = createCache({
+    key: `muirtl-${direction}`,
+    stylisPlugins: direction === "rtl" ? [prefixer, rtlPlugin] : [],
+  });
 
-function RTLProvider(props) {
-  return <CacheProvider value={cacheRtl}>{props.children}</CacheProvider>;
+  return <CacheProvider value={cache}>{children}</CacheProvider>;
 }
 
 RTLProvider.propTypes = {
+  direction: PropTypes.oneOf(["rtl", "ltr"]).isRequired,
   children: PropTypes.node.isRequired,
 };
 

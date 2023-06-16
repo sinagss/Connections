@@ -66,6 +66,7 @@ function sortByFav(a, b) {
 
 const Connections = () => {
   const contacts = useSelector((state) => state.connections.connections);
+
   const strings = useStrings().connections;
 
   const [connections, setConnections] = useState(
@@ -80,7 +81,6 @@ const Connections = () => {
   }, []);
 
   useEffect(() => {
-    // TODO:
     const sortedConnections = sortByType(sortType, [...contacts]);
     setConnections(sortedConnections);
   }, [contacts, sortType]);

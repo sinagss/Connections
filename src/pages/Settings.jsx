@@ -5,25 +5,18 @@ import {
   FormGroup,
   Switch,
   Typography,
-  Select,
-  MenuItem,
-  FormControl,
-  InputLabel,
   Box,
   Toolbar,
 } from "@mui/material";
 import { styled } from "@mui/system";
-import { useDispatch, useSelector } from "react-redux";
-import { changeLocale } from "../store/localSlice";
+import { useSelector } from "react-redux";
+import useStrings from "../hooks/useStrings";
+import { useEffect } from "react";
+import LanguageSelect from "../components/UI/LanguageSelect";
 
 const StyledContainer = styled(Container)(({ theme }) => ({
   paddingTop: theme.spacing(4),
   paddingBottom: theme.spacing(4),
-}));
-
-const StyledFormControl = styled(FormControl)(({ theme }) => ({
-  marginTop: theme.spacing(2),
-  minWidth: 200,
 }));
 
 const StyledFormGroup = styled(FormGroup)(({ theme }) => ({
@@ -41,28 +34,26 @@ const StyledSwitchLabel = styled(FormControlLabel)(({ theme }) => ({
 
 const Settings = () => {
   const [darkMode, setDarkMode] = useState(false);
-  const [language, setLanguage] = useState(
-    useSelector((state) => state.locale.locale)
-  );
 
-  const dispatch = useDispatch();
+  const strings = useStrings().settings;
+
+  const direction = useSelector((state) => state.locale.direction);
+
+  useEffect(() => {
+    document.dir = direction;
+  }, [direction]);
 
   const handleDarkModeChange = (event) => {
     setDarkMode(event.target.checked);
   };
 
-  const handleLanguageChange = (event) => {
-    setLanguage(event.target.value);
-    dispatch(changeLocale({ updatedLocale: event.target.value }));
-  };
-
   return (
     <>
       <Toolbar />
-      <StyledContainer maxWidth="sm">
+      <StyledContainer maxWidth="sm" dir={direction}>
         <Box display="flex" flexDirection="column" alignItems="center">
           <StyledTitle variant="h5" align="center" gutterBottom>
-            App Settings
+            {strings.pageLabel}
           </StyledTitle>
           <StyledFormGroup>
             <StyledSwitchLabel
@@ -73,16 +64,10 @@ const Settings = () => {
                   color="primary"
                 />
               }
-              label="Dark Mode"
+              label={strings.darkModeLabel}
             />
+            <LanguageSelect />
           </StyledFormGroup>
-          <StyledFormControl>
-            <InputLabel>Language</InputLabel>
-            <Select value={language} onChange={handleLanguageChange}>
-              <MenuItem value="en">English</MenuItem>
-              <MenuItem value="fr">Persian</MenuItem>
-            </Select>
-          </StyledFormControl>
         </Box>
       </StyledContainer>
     </>

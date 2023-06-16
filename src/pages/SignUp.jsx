@@ -18,6 +18,7 @@ import { useDispatch } from "react-redux";
 import { signUpUser } from "../store/authSlice.js";
 import { useEffect } from "react";
 import { useCallback } from "react";
+import useStrings from "../hooks/useStrings.js";
 
 const SignUp = () => {
   const [firstName, setFirstName] = useState("");
@@ -65,6 +66,10 @@ const SignUp = () => {
     setIsFormValid(isValid);
   }, [firstName, lastName, age, sex, username, email, password, type]);
 
+  const strings = useStrings().signup;
+  const typeStrings = strings.type;
+  const sexStrings = strings.sex;
+
   useEffect(() => {
     validateForm();
   }, [
@@ -83,13 +88,13 @@ const SignUp = () => {
     <Container maxWidth="sm">
       <Toolbar />
       <Typography variant="h4" align="center" gutterBottom>
-        Sign Up
+        {strings.pageTitle}
       </Typography>
       <form onSubmit={handleSignup}>
         <Grid container spacing={2}>
           <Grid item xs={12} sm={6}>
             <TextField
-              label="First Name"
+              label={strings.firtNameLabel}
               fullWidth
               required
               value={firstName}
@@ -101,7 +106,7 @@ const SignUp = () => {
           </Grid>
           <Grid item xs={12} sm={6}>
             <TextField
-              label="Last Name"
+              label={strings.lastNameLabel}
               fullWidth
               required
               value={lastName}
@@ -113,7 +118,7 @@ const SignUp = () => {
           </Grid>
           <Grid item xs={12} sm={6}>
             <TextField
-              label="Age"
+              label={strings.ageLabel}
               type="number"
               fullWidth
               required
@@ -123,30 +128,28 @@ const SignUp = () => {
                 validateForm();
               }}
               error={age < 10 || age > 100}
-              helperText={
-                (age < 10 || age > 100) && "Age must be between 10 and 100"
-              }
+              helperText={(age < 10 || age > 100) && strings.ageError}
             />
           </Grid>
           <Grid item xs={12} sm={6}>
             <FormControl fullWidth required>
-              <InputLabel>Sex</InputLabel>
+              <InputLabel>{sexStrings.label}</InputLabel>
               <Select
                 value={sex}
                 onChange={(e) => {
                   setSex(e.target.value);
                   validateForm();
                 }}
-                label="Sex"
+                label={sexStrings.label}
               >
-                <MenuItem value="male">Male</MenuItem>
-                <MenuItem value="female">Female</MenuItem>
+                <MenuItem value="male">{sexStrings.male}</MenuItem>
+                <MenuItem value="female">{sexStrings.female}</MenuItem>
               </Select>
             </FormControl>
           </Grid>
           <Grid item xs={12}>
             <TextField
-              label="Username"
+              label={strings.usernameLabel}
               fullWidth
               required
               value={username}
@@ -158,7 +161,7 @@ const SignUp = () => {
           </Grid>
           <Grid item xs={12}>
             <TextField
-              label="Email"
+              label={strings.emailLabel}
               type="email"
               fullWidth
               required
@@ -168,12 +171,12 @@ const SignUp = () => {
                 validateForm();
               }}
               error={email && !isValidEmail(email)}
-              helperText={email && !isValidEmail(email) && "Invalid email"}
+              helperText={email && !isValidEmail(email) && strings.emailError}
             />
           </Grid>
           <Grid item xs={12}>
             <TextField
-              label="Password"
+              label={strings.passwordLabel}
               type="password"
               fullWidth
               required
@@ -184,23 +187,25 @@ const SignUp = () => {
               }}
               error={password.length > 0 && password.length < 3}
               helperText={
-                password.length > 0 && password.length < 3 && "Invalid password"
+                password.length > 0 &&
+                password.length < 3 &&
+                strings.passwordError
               }
             />
           </Grid>
           <Grid item xs={12}>
             <FormControl fullWidth required>
-              <InputLabel>Type</InputLabel>
+              <InputLabel>{typeStrings.label}</InputLabel>
               <Select
                 value={type}
                 onChange={(e) => {
                   setType(e.target.value);
                   validateForm();
                 }}
-                label="Type"
+                label={typeStrings.label}
               >
-                <MenuItem value="user">User</MenuItem>
-                <MenuItem value="admin">Admin</MenuItem>
+                <MenuItem value="user">{typeStrings.user}</MenuItem>
+                <MenuItem value="admin">{typeStrings.admin}</MenuItem>
               </Select>
             </FormControl>
           </Grid>
@@ -212,15 +217,15 @@ const SignUp = () => {
               fullWidth
               disabled={!isFormValid}
             >
-              Sign Up
+              {strings.signupButtonLabel}
             </Button>
           </Grid>
         </Grid>
       </form>
       <Typography variant="body2" align="center" mt={2}>
-        Already have an account?{" "}
-        <RouterLink to="/login">
-          <Link color="primary">Log In</Link>
+        {strings.haveAccount}
+        <RouterLink to="/login" className="mx-1">
+          <Link color="primary">{strings.login}</Link>
         </RouterLink>
       </Typography>
     </Container>
