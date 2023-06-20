@@ -106,6 +106,11 @@ const strings = {
       loginErrorMessage: "Invalid Login Credentials",
       logoutMessage: "Logged Out Successfully",
     },
+    alerts: {
+      loginSuccessMessage: "Logged In Successfully",
+      loginErrorMessage: "Invalid Login Credentials",
+      logoutMessage: "Logged Out Successfully",
+    },
   },
   fr: {
     appBar: {
@@ -210,6 +215,11 @@ const strings = {
     },
     common: {
       getStartedButton: "شروع کن",
+      loginSuccessMessage: "با موفقیت وارد شدید.",
+      loginErrorMessage: "اطلاعات ورود نادرست است!",
+      logoutMessage: "با موفقیت خارج شدید.",
+    },
+    alerts: {
       loginSuccessMessage: "با موفقیت وارد شدید.",
       loginErrorMessage: "اطلاعات ورود نادرست است!",
       logoutMessage: "با موفقیت خارج شدید.",
