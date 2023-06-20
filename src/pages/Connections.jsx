@@ -141,7 +141,8 @@ const Connections = () => {
         <Container
           sx={{
             display: "flex",
-            flexDirection: "column",
+            flexDirection: "row",
+            justifyContent: "space-between",
           }}
         >
           <Typography variant="h5" gutterBottom sx={{ flexShrink: "initial" }}>
