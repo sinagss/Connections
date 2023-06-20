@@ -61,7 +61,7 @@ const DrawerAppBar = (props) => {
     <Box sx={{ display: "flex" }}>
       <CssBaseline />
       <AppBar className="fixed top-0 z-50">
-        <Toolbar>
+        <Toolbar sx={{ display: "flex", justifyContent: "space-between" }}>
           <Typography
             variant="h6"
             noWrap
@@ -70,6 +70,7 @@ const DrawerAppBar = (props) => {
             sx={{
               mr: 2,
               display: { xs: "none", md: "flex" },
+              justifyContent: { xs: "space-evenly" },
               fontFamily: "monospace",
               fontWeight: 700,
               letterSpacing: ".3rem",
@@ -84,7 +85,7 @@ const DrawerAppBar = (props) => {
             aria-label="open drawer"
             edge="start"
             onClick={handleDrawerToggle}
-            sx={{ mr: 2, display: { sm: "none" } }}
+            sx={{ mr: 2, display: { sm: "none", sx: "none" } }}
           >
             <MenuIcon />
           </IconButton>
