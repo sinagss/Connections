@@ -102,6 +102,9 @@ const strings = {
     },
     common: {
       getStartedButton: "Get Started",
+      loginSuccessMessage: "Logged In Successfully",
+      loginErrorMessage: "Invalid Login Credentials",
+      logoutMessage: "Logged Out Successfully",
     },
   },
   fr: {
@@ -156,7 +159,7 @@ const strings = {
       lastNameLabel: "نام خانوادگی",
       ageLabel: "سن",
       ageError: "سن باید بین ۱۰ سال تا ۱۰۰ سال باشد",
-      sex: { label: "Sex", female: "Female", male: "Male" },
+      sex: { label: "جنسیت", female: "زن", male: "مرد" },
       usernameLabel: "نام کاربری",
       emailLabel: "ایمیل",
       emailError: "ایمیل نامعتبر است",
@@ -176,7 +179,7 @@ const strings = {
       firstNameLabel: "نام",
       lastNameLabel: "نام خانوادگی",
       sex: { label: "جنسیت", female: "زن", male: "مرد" },
-      ageLabel: "Age",
+      ageLabel: "سن",
 
       emails: {
         emailsSectionLabel: "ایمیل‌ها",
@@ -207,6 +210,9 @@ const strings = {
     },
     common: {
       getStartedButton: "شروع کن",
+      loginSuccessMessage: "با موفقیت وارد شدید.",
+      loginErrorMessage: "اطلاعات ورود نادرست است!",
+      logoutMessage: "با موفقیت خارج شدید.",
     },
   },
 };
