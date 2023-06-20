@@ -11,8 +11,28 @@ import LogIn from "./pages/LogIn";
 import Settings from "./pages/Settings";
 import SignUp from "./pages/SignUp";
 import RTLProvider from "./providers/RTLProvider";
+import SnackAlert from "./components/UI/SnackAlert";
+import { useState } from "react";
+import useStrings from "./hooks/useStrings";
+import { useEffect } from "react";
 
 function App() {
+  const login = useSelector((state) => state.authenticator.isLoggedIn);
+
+  const [loginAlert, setLoginAlert] = useState(false);
+  const [logoutAlert, setLogoutAlert] = useState(!login);
+  const alertStrings = useStrings().alerts;
+
+  useEffect(() => {
+    if (login) {
+      setLoginAlert(true);
+      setLogoutAlert(false);
+    } else {
+      setLoginAlert(false);
+      setLogoutAlert(true);
+    }
+  }, [login]);
+
   const router = createBrowserRouter([
     {
       path: "",
@@ -20,6 +40,22 @@ function App() {
         <>
           <AppBar />
           <Outlet />
+          {loginAlert && (
+            <SnackAlert
+              alertType="success"
+              message={alertStrings.loginSuccessMessage}
+              open={loginAlert}
+              close={() => setLoginAlert(false)}
+            />
+          )}
+          {logoutAlert && (
+            <SnackAlert
+              alertType="info"
+              message={alertStrings.logoutMessage}
+              open={logoutAlert}
+              close={() => setLogoutAlert(false)}
+            />
+          )}
         </>
       ),
       errorElement: <Error />,
