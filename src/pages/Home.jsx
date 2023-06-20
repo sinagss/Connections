@@ -27,7 +27,7 @@ const HomePage = () => {
         </Typography>
       </Box>
       <GetStartedButton />
-      <Container sx={{ position: "fixed", bottom: 40 }}>
+      <Container sx={{ position: "relative", bottom: "1rem" }}>
         <LanguageSelect />
       </Container>
     </Box>
