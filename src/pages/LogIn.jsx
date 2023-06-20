@@ -1,21 +1,19 @@
-import Avatar from "@mui/material/Avatar";
-import Button from "@mui/material/Button";
-import CssBaseline from "@mui/material/CssBaseline";
-import TextField from "@mui/material/TextField";
-import FormControlLabel from "@mui/material/FormControlLabel";
-import Checkbox from "@mui/material/Checkbox";
-import Link from "@mui/material/Link";
-import Grid from "@mui/material/Grid";
-import Box from "@mui/material/Box";
 import LockOutlinedIcon from "@mui/icons-material/LockOutlined";
-import Typography from "@mui/material/Typography";
+import Avatar from "@mui/material/Avatar";
+import Box from "@mui/material/Box";
+import Button from "@mui/material/Button";
 import Container from "@mui/material/Container";
-import { useDispatch, useSelector } from "react-redux";
-import { logIn } from "../store/authSlice";
-import { useNavigate } from "react-router-dom";
+import CssBaseline from "@mui/material/CssBaseline";
+import Grid from "@mui/material/Grid";
+import Link from "@mui/material/Link";
+import TextField from "@mui/material/TextField";
+import Typography from "@mui/material/Typography";
 import { useState } from "react";
-import { Link as RouterLink } from "react-router-dom";
+import { useDispatch, useSelector } from "react-redux";
+import { Link as RouterLink, useNavigate } from "react-router-dom";
 import useStrings from "../hooks/useStrings";
+import { logIn } from "../store/authSlice";
+import SnackAlert from "../components/UI/SnackAlert";
 
 function Copyright(props) {
   const mySiteUrl = import.meta.env.VITE_MY_WEBSITE_URL;
@@ -45,12 +43,14 @@ function credentialCheck(systemUsers, email, password) {
 
 export default function LogIn() {
   const [loginError, setLoginError] = useState(false);
+  const [openErrorAlert, setOpenErrorAlert] = useState(false);
 
   const dispatch = useDispatch();
   const nav = useNavigate();
   const systemUsers = useSelector((state) => state.authenticator.systemUsers);
 
   const strings = useStrings().login;
+  const commonStrings = useStrings().common;
 
   const handleSubmit = (event) => {
     event.preventDefault();
@@ -64,11 +64,18 @@ export default function LogIn() {
       nav("/");
     } else {
       setLoginError(true);
+      setOpenErrorAlert(true);
     }
   };
 
   return (
     <Container component="main" maxWidth="xs">
+      <SnackAlert
+        alertType="error"
+        message={commonStrings.loginErrorMessage}
+        open={openErrorAlert}
+        close={setOpenErrorAlert}
+      />
       <CssBaseline />
       <Box
         sx={{
@@ -106,10 +113,6 @@ export default function LogIn() {
             type="password"
             id="password"
             autoComplete="current-password"
-          />
-          <FormControlLabel
-            control={<Checkbox value="remember" color="primary" />}
-            label={strings.signinLabel}
           />
           <Button
             type="submit"
