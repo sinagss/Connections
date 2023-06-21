@@ -4,8 +4,19 @@ export const isValidEmail = (email) => {
   return emailRegex.test(email);
 };
 
+import { isValidNumber } from "libphonenumber-js";
+
 export const isValidPhoneNumber = (phoneNumber) => {
-  // Use a regular expression to validate phone number format
-  const phoneNumberRegex = /^\+\d{1,3}\(\d{2}\)\s\d{2}-\d{6}$/;
-  return phoneNumberRegex.test(phoneNumber);
+  try {
+    // Validate the phone number
+    const parsedNumber = isValidNumber(phoneNumber);
+
+    if (parsedNumber && parsedNumber.country === "IR") {
+      return true;
+    }
+  } catch (error) {
+    console.error("Phone number validation error:", error);
+  }
+
+  return false;
 };
