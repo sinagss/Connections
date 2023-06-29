@@ -4,18 +4,20 @@ export const isValidEmail = (email) => {
   return emailRegex.test(email);
 };
 
-import { isValidNumber } from "libphonenumber-js";
+import { isValidNumber, parsePhoneNumber } from "libphonenumber-js";
 
 export const isValidPhoneNumber = (phoneNumber) => {
   try {
-    // Validate the phone number
-    const parsedNumber = isValidNumber(phoneNumber);
+    const parsedNumber = parsePhoneNumber(phoneNumber, "IR");
 
-    if (parsedNumber && parsedNumber.country === "IR") {
+    // Validate the phone number
+    const validNumber = isValidNumber(parsedNumber.number);
+
+    if (validNumber) {
       return true;
     }
   } catch (error) {
-    console.error("Phone number validation error:", error);
+    console.info("Invalid phone number");
   }
 
   return false;
