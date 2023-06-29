@@ -92,6 +92,7 @@ const Connections = () => {
 
   const handleModalClose = () => {
     setIsModalOpen(false);
+    setEditConnection(null);
   };
 
   const handleAddContact = () => {
