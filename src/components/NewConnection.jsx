@@ -1,24 +1,24 @@
-import { useEffect, useState } from "react";
-import PropTypes from "prop-types";
+import { AddBox, Delete } from "@mui/icons-material";
 import {
-  Modal,
   Box,
-  Typography,
-  TextField,
   Button,
-  Select,
-  MenuItem,
   FormControl,
-  InputLabel,
   Grid,
   IconButton,
+  InputLabel,
+  MenuItem,
+  Modal,
+  Select,
+  TextField,
+  Typography,
   useTheme,
 } from "@mui/material";
-import { AddBox, Delete } from "@mui/icons-material";
-import { isValidEmail, isValidPhoneNumber } from "../utils/validationUtils";
+import PropTypes from "prop-types";
+import { useEffect, useState } from "react";
 import { useDispatch } from "react-redux";
-import { addConnection, updateConnection } from "../store/connectionsSlice";
 import useStrings from "../hooks/useStrings";
+import { addConnection, updateConnection } from "../store/connectionsSlice";
+import { isValidEmail, isValidPhoneNumber } from "../utils/validationUtils";
 
 const ModalPage = ({ open, onClose, connectionToEdit }) => {
   const strings = useStrings().newConnections;
