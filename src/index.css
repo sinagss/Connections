@@ -4,4 +4,8 @@
 
 body {
   overscroll-behavior-y: none;
+  -webkit-user-select: none;
+  -moz-user-select: none;
+  -ms-user-select: none;
+  user-select: none;
 }
