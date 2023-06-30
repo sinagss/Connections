@@ -89,7 +89,7 @@ const strings = {
       },
       addressLabel: "Address",
       addNewConnection: "Add to Connections",
-      updateConnection: "Update Connection",
+      updateConnection: "Update",
       deleteConnectionButtonLabel: "Delete",
       deleteAlertDialog: {
         title: "Are you sure you want to delete this connection?",
