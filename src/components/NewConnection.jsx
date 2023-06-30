@@ -1,7 +1,12 @@
-import { AddBox, Delete } from "@mui/icons-material";
+import { AddBox, Delete, DeleteForever } from "@mui/icons-material";
 import {
   Box,
   Button,
+  Dialog,
+  DialogActions,
+  DialogContent,
+  DialogContentText,
+  DialogTitle,
   FormControl,
   Grid,
   IconButton,
@@ -17,7 +22,11 @@ import PropTypes from "prop-types";
 import { useEffect, useState } from "react";
 import { useDispatch } from "react-redux";
 import useStrings from "../hooks/useStrings";
-import { addConnection, updateConnection } from "../store/connectionsSlice";
+import {
+  addConnection,
+  updateConnection,
+  removeConnection,
+} from "../store/connectionsSlice";
 import { isValidEmail, isValidPhoneNumber } from "../utils/validationUtils";
 
 const ModalPage = ({ open, onClose, connectionToEdit }) => {
@@ -25,6 +34,7 @@ const ModalPage = ({ open, onClose, connectionToEdit }) => {
   const emailStrings = strings.emails;
   const phoneStrings = strings.phoneNumbers;
   const sexStrings = strings.sex;
+  const alertDialogStrings = strings.deleteAlertDialog;
 
   const [isValidForm, setIsValidForm] = useState(false);
   const [id, setId] = useState("");
@@ -35,6 +45,8 @@ const ModalPage = ({ open, onClose, connectionToEdit }) => {
   const [phoneNumbers, setPhoneNumbers] = useState([""]);
   const [emails, setEmails] = useState([""]);
   const [address, setAddress] = useState("");
+
+  const [openDeleteAlert, setOpenDeleteAlert] = useState(false);
 
   const dispatch = useDispatch();
 
@@ -89,6 +101,19 @@ const ModalPage = ({ open, onClose, connectionToEdit }) => {
     setEmails(updatedEmails);
   };
 
+  const handleOpenAlert = () => {
+    setOpenDeleteAlert(true);
+  };
+  const handleCloseAlert = () => {
+    setOpenDeleteAlert(false);
+  };
+
+  const deleteConnectionHandler = () => {
+    dispatch(removeConnection({ id: connectionToEdit.id }));
+    setOpenDeleteAlert(false);
+    onClose();
+  };
+
   const handleSubmit = () => {
     const contactInfo = {
       id,
@@ -135,6 +160,41 @@ const ModalPage = ({ open, onClose, connectionToEdit }) => {
       firstName && lastName && age && sex && emails.every(isValidEmail);
     setIsValidForm(isValid);
   }, [firstName, lastName, age, sex, emails]);
+
+  const alertDialog = (
+    <Dialog
+      open={openDeleteAlert}
+      onClose={handleOpenAlert}
+      aria-labelledby="alert-dialog-title"
+      aria-describedby="alert-dialog-description"
+    >
+      <DialogTitle id="alert-dialog-title">
+        {alertDialogStrings.title}
+      </DialogTitle>
+      <DialogContent>
+        <DialogContentText id="alert-dialog-description">
+          {alertDialogStrings.message}
+        </DialogContentText>
+      </DialogContent>
+      <DialogActions>
+        <Button
+          onClick={handleCloseAlert}
+          variant="contained"
+          color="primary"
+          autoFocus
+        >
+          {alertDialogStrings.noButtonLabel}
+        </Button>
+        <Button
+          variant="outlined"
+          color="error"
+          onClick={deleteConnectionHandler}
+        >
+          {alertDialogStrings.yesButtonLabel}
+        </Button>
+      </DialogActions>
+    </Dialog>
+  );
 
   return (
     <Modal open={open} onClose={modalCloseHandler}>
@@ -264,7 +324,7 @@ const ModalPage = ({ open, onClose, connectionToEdit }) => {
                   fullWidth
                   margin="normal"
                   error={!isValidEmail(email)}
-                  helperText={!isValidEmail(email) && "Invalid email"}
+                  helperText={!isValidEmail(email) && emailStrings.invalidEmail}
                 />
               </Grid>
               <Grid item xs={3}>
@@ -295,7 +355,12 @@ const ModalPage = ({ open, onClose, connectionToEdit }) => {
           fullWidth
           margin="normal"
         />
-        <Box mt={3} textAlign="right">
+        <Box
+          mt={3}
+          textAlign="right"
+          display={"flex"}
+          justifyContent={"space-between"}
+        >
           <Button
             variant="contained"
             color="primary"
@@ -306,7 +371,21 @@ const ModalPage = ({ open, onClose, connectionToEdit }) => {
               ? strings.updateConnection
               : strings.addNewConnection}
           </Button>
+
+          {connectionToEdit ? (
+            <Button
+              variant="outlined"
+              color="error"
+              onClick={() => handleOpenAlert()}
+            >
+              <DeleteForever />
+              {strings.deleteConnectionButtonLabel}
+            </Button>
+          ) : (
+            ""
+          )}
         </Box>
+        {alertDialog}
       </Box>
     </Modal>
   );

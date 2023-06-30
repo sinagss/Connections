@@ -11,15 +11,14 @@ const connectionsSlice = createSlice({
       const randomId = Math.floor(
         Math.random() * state.connections.length * 100
       );
-      const newConnection = { id: randomId, ...action.payload };
-
+      const newConnection = { ...action.payload, id: randomId };
       state.connections.push(newConnection);
     },
 
     removeConnection: (state, action) => {
       const connectionId = action.payload;
       state.connections = state.connections.filter(
-        (connection) => connection.id !== connectionId
+        (connection) => connection.id !== connectionId.id
       );
     },
 
