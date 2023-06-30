@@ -90,6 +90,13 @@ const strings = {
       addressLabel: "Address",
       addNewConnection: "Add to Connections",
       updateConnection: "Update Connection",
+      deleteConnectionButtonLabel: "Delete",
+      deleteAlertDialog: {
+        title: "Are you sure you want to delete this connection?",
+        message: "Are you sure? The connection will be permanantly deleted!",
+        yesButtonLabel: "Yes",
+        noButtonLabel: "No",
+      },
     },
     settings: {
       pageLabel: "App Settings",
@@ -203,6 +210,13 @@ const strings = {
       addressLabel: "آدرس",
       addNewConnection: "افزودن به روابط",
       updateConnection: "بروزرسانی رابطه",
+      deleteConnectionButtonLabel: "حذف",
+      deleteAlertDialog: {
+        title: "آیا از حذف این رابطه مطمئن هستید؟",
+        message: "آیا مطمئن هستید؟‌ رابطه به صورت دائمی حذف می‌شود!",
+        yesButtonLabel: "بله",
+        noButtonLabel: "خیر",
+      },
     },
     settings: {
       pageLabel: "تنظیمات برنامه",
