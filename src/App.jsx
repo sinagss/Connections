@@ -23,6 +23,12 @@ function App() {
   const [logoutAlert, setLogoutAlert] = useState(!login);
   const alertStrings = useStrings().alerts;
 
+  const direction = useSelector((state) => state.locale.direction);
+
+  useEffect(() => {
+    document.dir = direction;
+  });
+
   useEffect(() => {
     if (login) {
       setLoginAlert(true);
@@ -94,7 +100,6 @@ function App() {
     },
   ]);
 
-  const direction = useSelector((state) => state.locale.direction);
   const theme = createTheme({ direction });
 
   return (
