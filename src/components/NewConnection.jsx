@@ -29,7 +29,7 @@ import {
 } from "../store/connectionsSlice";
 import { isValidEmail, isValidPhoneNumber } from "../utils/validationUtils";
 
-const ModalPage = ({ open, onClose, connectionToEdit }) => {
+const ModalPage = ({ open, onClose, connectionToEdit, updated }) => {
   const strings = useStrings().newConnections;
   const emailStrings = strings.emails;
   const phoneStrings = strings.phoneNumbers;
@@ -127,6 +127,7 @@ const ModalPage = ({ open, onClose, connectionToEdit }) => {
     };
     if (connectionToEdit) {
       dispatch(updateConnection({ id: contactInfo.id, contactInfo }));
+      updated(true);
     } else {
       dispatch(addConnection(contactInfo));
     }
@@ -395,6 +396,7 @@ ModalPage.propTypes = {
   open: PropTypes.bool.isRequired,
   onClose: PropTypes.func.isRequired,
   connectionToEdit: PropTypes.object,
+  updated: PropTypes.func.isRequired,
 };
 
 export default ModalPage;

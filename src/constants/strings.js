@@ -112,6 +112,7 @@ const strings = {
       loginSuccessMessage: "Logged In Successfully",
       loginErrorMessage: "Invalid Login Credentials",
       logoutMessage: "Logged Out Successfully",
+      connectionUpdatedMessage: "Connection Successfully Updated.",
     },
     alerts: {
       loginSuccessMessage: "Logged In Successfully",
@@ -232,6 +233,7 @@ const strings = {
       loginSuccessMessage: "با موفقیت وارد شدید.",
       loginErrorMessage: "اطلاعات ورود نادرست است!",
       logoutMessage: "با موفقیت خارج شدید.",
+      connectionUpdatedMessage: "رابطه با موفقیت بروزرسانی شد.",
     },
     alerts: {
       loginSuccessMessage: "با موفقیت وارد شدید.",

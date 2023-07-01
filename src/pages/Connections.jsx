@@ -15,6 +15,7 @@ import NewConnection from "../components/NewConnection";
 import { useSelector } from "react-redux";
 import CustomListItem from "../components/UI/CustomListItem";
 import useStrings from "../hooks/useStrings";
+import SnackAlert from "../components/UI/SnackAlert";
 
 function sortByType(type, connections) {
   let sortedConnections = [...connections];
@@ -68,6 +69,7 @@ const Connections = () => {
   const contacts = useSelector((state) => state.connections.connections);
 
   const strings = useStrings().connections;
+  const commonStrings = useStrings().common;
 
   const [connections, setConnections] = useState(
     [...contacts].sort((a, b) => sortByFav(a, b))
@@ -75,6 +77,8 @@ const Connections = () => {
   const [sortType, setSortType] = useState("fav");
   const [isModalOpen, setIsModalOpen] = useState(false);
   const [editConnection, setEditConnection] = useState(null);
+
+  const [wasConnectionUpdated, setWasConnectionUpdated] = useState(false);
 
   useEffect(() => {
     setSortType("fav");
@@ -121,6 +125,15 @@ const Connections = () => {
     setEditConnection(connection);
     setIsModalOpen(true);
   };
+
+  const updateSnackAlert = (
+    <SnackAlert
+      alertType="success"
+      message={commonStrings.connectionUpdatedMessage}
+      open={wasConnectionUpdated}
+      close={() => setWasConnectionUpdated(false)}
+    />
+  );
 
   return (
     <>
@@ -193,7 +206,9 @@ const Connections = () => {
           onClose={handleModalClose}
           onAddContact={handleAddContact}
           connectionToEdit={editConnection}
+          updated={setWasConnectionUpdated}
         />
+        {updateSnackAlert}
       </Container>
     </>
   );
