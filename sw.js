@@ -23,6 +23,11 @@ if (workbox) {
   // Add more route registrations and caching strategies
 }
 
+// Set up offline fallback
+offlineFallback({
+  pageFallback: "/offline.html",
+});
+
 if (workbox) {
   workbox.routing.setCatchHandler(({ event }) => {
     switch (event.request.destination) {
