@@ -10,7 +10,7 @@ export default defineConfig({
       manifest: {
         name: "Virtual Connections",
         short_name: "Connections",
-        start_url: "index.html",
+        start_url: "/",
         icons: [
           {
             src: "./src/assets/user.png",
