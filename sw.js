@@ -1,40 +1,55 @@
-/* eslint-disable no-undef */
-importScripts(
-  "https://storage.googleapis.com/workbox-cdn/releases/5.1.4/workbox-sw.js"
-);
+const cacheName = "cache-v1";
 
-if (workbox) {
-  workbox.precaching.precacheAndRoute([
-    { url: "/index.html", revision: "1" },
-    { url: "/offline.html", revision: "1" },
-    { url: "/src/assets/about.jpg", revision: "1" },
-    { url: "/src/assets/networking.png", revision: "1" },
-    { url: "/src/assets/notFound-1.svg", revision: "1" },
-    { url: "/src/assets/user.png", revision: "1" },
-    { url: "/src/assets/users.png", revision: "1" },
-  ]);
-}
+const precacheResources = [
+  "/index.html",
+  "/offline.html",
+  "/src/assets/icons/icon-144x144.png",
+  "/src/assets/icons/icon-152x152.png",
+  "/src/assets/icons/icon-192x192.png",
+  "/src/assets/icons/icon-384x384.png",
+  "/src/assets/icons/icon-512x512.png",
+  "/src/assets/icons/icon-72x72.png",
+  "/src/assets/icons/icon-96x96.png",
+];
 
-if (workbox) {
-  workbox.routing.registerRoute(
-    ({ request }) => request.destination === "image",
-    new workbox.strategies.CacheFirst()
+self.addEventListener("install", (event) => {
+  event.waitUntil(
+    caches.open(cacheName).then((cache) => cache.addAll(precacheResources))
   );
-  // Add more route registrations and caching strategies
-}
-
-// Set up offline fallback
-offlineFallback({
-  pageFallback: "/offline.html",
 });
 
-if (workbox) {
-  workbox.routing.setCatchHandler(({ event }) => {
-    switch (event.request.destination) {
-      case "document":
-        return caches.match("/offline.html");
-      default:
-        return Response.error();
-    }
-  });
-}
+self.addEventListener("activate", (event) => {
+  event.waitUntil(
+    caches.keys().then((cacheNames) => {
+      return Promise.all(
+        cacheNames
+          .filter((name) => name !== cacheName)
+          .map((name) => caches.delete(name))
+      );
+    })
+  );
+});
+
+self.addEventListener("fetch", (event) => {
+  event.respondWith(
+    caches.match(event.request).then((cachedResponse) => {
+      if (cachedResponse) {
+        return cachedResponse;
+      }
+
+      return fetch(event.request).then((response) => {
+        if (!response || response.status !== 200 || response.type !== "basic") {
+          return response;
+        }
+
+        const responseToCache = response.clone();
+
+        caches.open(cacheName).then((cache) => {
+          cache.put(event.request, responseToCache);
+        });
+
+        return response;
+      });
+    })
+  );
+});
