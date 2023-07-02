@@ -1,55 +1,41 @@
-const cacheName = "cache-v1";
+import { warmStrategyCache, offlineFallback } from "workbox-recipes";
+import { CacheFirst, StaleWhileRevalidate } from "workbox-strategies";
+import { registerRoute } from "workbox-routing";
+import { CacheableResponsePlugin } from "workbox-cacheable-response";
+import { ExpirationPlugin } from "workbox-expiration";
 
-const precacheResources = [
-  "/index.html",
-  "/offline.html",
-  "/src/assets/icons/icon-144x144.png",
-  "/src/assets/icons/icon-152x152.png",
-  "/src/assets/icons/icon-192x192.png",
-  "/src/assets/icons/icon-384x384.png",
-  "/src/assets/icons/icon-512x512.png",
-  "/src/assets/icons/icon-72x72.png",
-  "/src/assets/icons/icon-96x96.png",
-];
-
-self.addEventListener("install", (event) => {
-  event.waitUntil(
-    caches.open(cacheName).then((cache) => cache.addAll(precacheResources))
-  );
+// Set up page cache
+const pageCache = new CacheFirst({
+  cacheName: "page-cache",
+  plugins: [
+    new CacheableResponsePlugin({
+      statuses: [0, 200],
+    }),
+    new ExpirationPlugin({
+      maxAgeSeconds: 30 * 24 * 60 * 60,
+    }),
+  ],
 });
 
-self.addEventListener("activate", (event) => {
-  event.waitUntil(
-    caches.keys().then((cacheNames) => {
-      return Promise.all(
-        cacheNames
-          .filter((name) => name !== cacheName)
-          .map((name) => caches.delete(name))
-      );
-    })
-  );
+warmStrategyCache({
+  urls: ["/index.html", "/"],
+  strategy: pageCache,
 });
 
-self.addEventListener("fetch", (event) => {
-  event.respondWith(
-    caches.match(event.request).then((cachedResponse) => {
-      if (cachedResponse) {
-        return cachedResponse;
-      }
+registerRoute(({ request }) => request.mode === "navigate", pageCache);
 
-      return fetch(event.request).then((response) => {
-        if (!response || response.status !== 200 || response.type !== "basic") {
-          return response;
-        }
+registerRoute(
+  ({ request }) => ["style", "script", "worker"].includes(request.destination),
+  new StaleWhileRevalidate({
+    cacheName: "asset-cache",
+    plugins: [
+      new CacheableResponsePlugin({
+        statuses: [0, 200],
+      }),
+    ],
+  })
+);
 
-        const responseToCache = response.clone();
-
-        caches.open(cacheName).then((cache) => {
-          cache.put(event.request, responseToCache);
-        });
-
-        return response;
-      });
-    })
-  );
+offlineFallback({
+  pageFallback: "/offline.html",
 });
