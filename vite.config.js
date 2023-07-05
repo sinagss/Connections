@@ -4,13 +4,18 @@ import { VitePWA } from "vite-plugin-pwa";
 import { resolve } from "path";
 
 export default defineConfig({
+  build: {
+    assetsDir: "assets",
+  },
   plugins: [
     react(),
     VitePWA({
-      registerType: "auto",
+      registerType: "autoUpdate",
       manifest: {
         name: "Virtual Connections",
         short_name: "Connections",
+        description:
+          "An app to manage all your social and professional conections.",
         theme_color: "#1976d2",
         background_color: "#1976d2",
         display: "standalone",
@@ -19,59 +24,53 @@ export default defineConfig({
         start_url: "/index.html",
         icons: [
           {
-            src: "/assets/icons/icon-72x72.png",
+            src: "/icon-72x72.png",
             sizes: "72x72",
             type: "image/png",
           },
           {
-            src: "/assets/icons/icon-96x96.png",
+            src: "/icon-96x96.png",
             sizes: "96x96",
             type: "image/png",
           },
           {
-            src: "/assets/icons/icon-128x128.png",
-            sizes: "128x128",
-            type: "image/png",
-          },
-          {
-            src: "/assets/icons/icon-144x144.png",
+            src: "/icon-144x144.png",
             sizes: "144x144",
             type: "image/png",
           },
           {
-            src: "/assets/icons/icon-152x152.png",
+            src: "/icon-152x152.png",
             sizes: "152x152",
             type: "image/png",
           },
           {
-            src: "/assets/icons/icon-192x192.png",
+            src: "/icon-192x192.png",
             sizes: "192x192",
             type: "image/png",
           },
           {
-            src: "/assets/icons/icon-384x384.png",
+            src: "/icon-384x384.png",
             sizes: "384x384",
             type: "image/png",
           },
           {
-            src: "/assets/icons/icon-512x512.png",
+            src: "/icon-512x512.png",
             sizes: "512x512",
             type: "image/png",
           },
         ],
       },
       workbox: {
-        // Customize the Workbox options here
-        // For example, precaching additional assets:
-        globPatterns: ["**/*.{js,css,html,png,jpg,jpeg,gif,svg}"],
-        globDirectory: "./src/assets",
+        globPatterns: ["**/*"],
+        globDirectory: ".",
       },
       rollupOptions: {
         input: {
-          index: resolve("/index.html"),
-          offline: resolve("/offline.html"),
+          index: resolve("index.html"),
+          offline: resolve("offline.html"),
         },
       },
+      includeAssets: ["**/*"],
     }),
   ],
 });
