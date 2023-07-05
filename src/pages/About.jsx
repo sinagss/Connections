@@ -1,7 +1,7 @@
 import { Box, Typography, Toolbar } from "@mui/material";
 import { motion } from "framer-motion";
 
-import AboutImage from "../assets/about.jpg";
+import AboutImage from "../../public/about.jpg";
 import GetStartedButton from "../components/UI/GetStartedButton";
 import useStrings from "../hooks/useStrings";
 
