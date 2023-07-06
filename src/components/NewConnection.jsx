@@ -29,7 +29,14 @@ import {
 } from "../store/connectionsSlice";
 import { isValidEmail, isValidPhoneNumber } from "../utils/validationUtils";
 
-const ModalPage = ({ open, onClose, connectionToEdit, updated }) => {
+const ModalPage = ({
+  open,
+  onClose,
+  connectionToEdit,
+  updated,
+  deleted,
+  created,
+}) => {
   const strings = useStrings().newConnections;
   const emailStrings = strings.emails;
   const phoneStrings = strings.phoneNumbers;
@@ -111,6 +118,7 @@ const ModalPage = ({ open, onClose, connectionToEdit, updated }) => {
   const deleteConnectionHandler = () => {
     dispatch(removeConnection({ id: connectionToEdit.id }));
     setOpenDeleteAlert(false);
+    deleted(true);
     onClose();
   };
 
@@ -130,7 +138,9 @@ const ModalPage = ({ open, onClose, connectionToEdit, updated }) => {
       updated(true);
     } else {
       dispatch(addConnection(contactInfo));
+      created(true);
     }
+
     setId("");
     setFirstName("");
     setLastName("");
@@ -397,6 +407,8 @@ ModalPage.propTypes = {
   onClose: PropTypes.func.isRequired,
   connectionToEdit: PropTypes.object,
   updated: PropTypes.func.isRequired,
+  deleted: PropTypes.func.isRequired,
+  created: PropTypes.func.isRequired,
 };
 
 export default ModalPage;

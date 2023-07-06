@@ -118,6 +118,8 @@ const strings = {
       loginSuccessMessage: "Logged In Successfully",
       loginErrorMessage: "Invalid Login Credentials",
       logoutMessage: "Logged Out Successfully",
+      connectionDeletedMessage: "Connection Succesfully Deleted.",
+      connectionCreatedMessage: "Connection Succesfully Created.",
     },
   },
   fr: {
@@ -239,6 +241,8 @@ const strings = {
       loginSuccessMessage: "با موفقیت وارد شدید.",
       loginErrorMessage: "اطلاعات ورود نادرست است!",
       logoutMessage: "با موفقیت خارج شدید.",
+      connectionDeletedMessage: "رابطه با موفقیت حذف شد.",
+      connectionCreatedMessage: "رابطه با موفقیت ذخیره شد.",
     },
   },
 };

@@ -70,6 +70,7 @@ const Connections = () => {
 
   const strings = useStrings().connections;
   const commonStrings = useStrings().common;
+  const alertStrings = useStrings().alerts;
 
   const [connections, setConnections] = useState(
     [...contacts].sort((a, b) => sortByFav(a, b))
@@ -79,6 +80,8 @@ const Connections = () => {
   const [editConnection, setEditConnection] = useState(null);
 
   const [wasConnectionUpdated, setWasConnectionUpdated] = useState(false);
+  const [wasConnectionDeleted, setWasConnectionDeleted] = useState(false);
+  const [wasConnectionCreated, setWasConnectionCreated] = useState(false);
 
   useEffect(() => {
     setSortType("fav");
@@ -126,12 +129,30 @@ const Connections = () => {
     setIsModalOpen(true);
   };
 
+  const deleteSnackAlert = (
+    <SnackAlert
+      alertType="success"
+      message={alertStrings.connectionDeletedMessage}
+      open={wasConnectionDeleted}
+      close={() => setWasConnectionDeleted(false)}
+    />
+  );
+
   const updateSnackAlert = (
     <SnackAlert
       alertType="success"
       message={commonStrings.connectionUpdatedMessage}
       open={wasConnectionUpdated}
       close={() => setWasConnectionUpdated(false)}
+    />
+  );
+
+  const createdSnackAlert = (
+    <SnackAlert
+      alertType="success"
+      message={alertStrings.connectionCreatedMessage}
+      open={wasConnectionCreated}
+      close={() => setWasConnectionCreated(false)}
     />
   );
 
@@ -207,8 +228,12 @@ const Connections = () => {
           onAddContact={handleAddContact}
           connectionToEdit={editConnection}
           updated={setWasConnectionUpdated}
+          deleted={setWasConnectionDeleted}
+          created={setWasConnectionCreated}
         />
         {updateSnackAlert}
+        {deleteSnackAlert}
+        {createdSnackAlert}
       </Container>
     </>
   );
