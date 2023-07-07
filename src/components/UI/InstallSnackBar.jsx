@@ -52,7 +52,6 @@ const InstallSnackBar = () => {
       autoHideDuration={10000}
       onClose={handleCloseSnackbar}
       message={alertStrings.installAppMessage}
-      anchorOrigin={("bottom", "center")}
       action={
         <Button color="secondary" size="small" onClick={handleInstall}>
           <InstallMobile />
