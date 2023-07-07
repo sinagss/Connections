@@ -15,6 +15,7 @@ import SnackAlert from "./components/UI/SnackAlert";
 import { useState } from "react";
 import useStrings from "./hooks/useStrings";
 import { useEffect } from "react";
+import InstallSnackBar from "./components/UI/InstallSnackBar";
 
 function App() {
   const login = useSelector((state) => state.authenticator.isLoggedIn);
@@ -39,6 +40,21 @@ function App() {
     }
   }, [login]);
 
+  useEffect(() => {
+    const handleBeforeInstallPrompt = (event) => {
+      event.preventDefault();
+    };
+
+    window.addEventListener("beforeinstallprompt", handleBeforeInstallPrompt);
+
+    return () => {
+      window.removeEventListener(
+        "beforeinstallprompt",
+        handleBeforeInstallPrompt
+      );
+    };
+  }, []);
+
   const router = createBrowserRouter([
     {
       path: "",
@@ -62,6 +78,7 @@ function App() {
               close={() => setLogoutAlert(false)}
             />
           )}
+          <InstallSnackBar />
         </>
       ),
       errorElement: <Error />,

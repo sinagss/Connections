@@ -113,6 +113,7 @@ const strings = {
       loginErrorMessage: "Invalid Login Credentials",
       logoutMessage: "Logged Out Successfully",
       connectionUpdatedMessage: "Connection Successfully Updated.",
+      installButton: "Install",
     },
     alerts: {
       loginSuccessMessage: "Logged In Successfully",
@@ -120,6 +121,8 @@ const strings = {
       logoutMessage: "Logged Out Successfully",
       connectionDeletedMessage: "Connection Succesfully Deleted.",
       connectionCreatedMessage: "Connection Succesfully Created.",
+      installAppMessage:
+        "Want to use this app offline? Good new, you can. Just click intall!",
     },
   },
   fr: {
@@ -236,6 +239,7 @@ const strings = {
       loginErrorMessage: "اطلاعات ورود نادرست است!",
       logoutMessage: "با موفقیت خارج شدید.",
       connectionUpdatedMessage: "رابطه با موفقیت بروزرسانی شد.",
+      installButton: "نصب",
     },
     alerts: {
       loginSuccessMessage: "با موفقیت وارد شدید.",
@@ -243,6 +247,8 @@ const strings = {
       logoutMessage: "با موفقیت خارج شدید.",
       connectionDeletedMessage: "رابطه با موفقیت حذف شد.",
       connectionCreatedMessage: "رابطه با موفقیت ذخیره شد.",
+      installAppMessage:
+        "آیا می‌خواهید از این برنامه بدون اینترنت استفاده کنید؟ فقط کافیست روی دکه نصب کلیک کنید!",
     },
   },
 };
