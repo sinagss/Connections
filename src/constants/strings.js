@@ -122,7 +122,7 @@ const strings = {
       connectionDeletedMessage: "Connection Succesfully Deleted.",
       connectionCreatedMessage: "Connection Succesfully Created.",
       installAppMessage:
-        "Want to use this app offline? Good new, you can. Just click intall!",
+        "Want to use this app offline? Good new, you can. Just click install!",
     },
   },
   fr: {
